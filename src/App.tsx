@@ -1,7 +1,11 @@
 function App() {
   return (
-    <div>
-      <h1>Hellp ignaito lab. :D</h1>
+    <div
+			className="w-full h-full bg-gray.700"
+		>
+      <h1 className="text-gray.100">
+				Hellp ignaito lab. :D
+			</h1>
     </div>
   )
 }
