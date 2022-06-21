@@ -1,10 +1,13 @@
+import { Header } from './components/header'
+
 function App() {
   return (
     <div
-			className="w-full h-full bg-gray.700"
+			className="w-full h-[100vh] bg-gray-700"
 		>
-      <h1 className="text-gray.100">
-				Hellp ignaito lab. :D
+			<Header />
+      <h1 className="text-gray-100">
+				Hello ignaito lab. :D
 			</h1>
     </div>
   )
