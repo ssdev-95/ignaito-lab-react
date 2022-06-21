@@ -1,4 +1,4 @@
-import IgniteLabLogo from '../assets/ignite-lab-logo.svg'
+import TikoTekoLogo from '../assets/tiko-teko-logo.svg'
 
 export function Header() {
 	return (
@@ -7,7 +7,7 @@ export function Header() {
 		>
 			<img
 				className="h-[1.45rem] lg:h-[2rem] w-auto"
-				src={IgniteLabLogo}
+				src={TikoTekoLogo}
 				alt="IgniteLab logo"
 			/>
 		</header>

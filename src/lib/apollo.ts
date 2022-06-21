@@ -11,11 +11,25 @@ export const client = new ApolloClient({
 	cache: new InMemoryCache()
 })
 
-export const RETRIEVE_LESSONS = gql`
+export const RETRIEVE_ALL_LESSONS = gql`
 	query {
 		lessons {
 			id
-			description
+			title
+			availableAt
+			lessonType
 		}
 	}
 `
+
+export const RETRIEVE_LESSON_BY_ID = (slug:string) => (gql`
+	query {
+		lessons (where: { slug: "${slug}"}) {
+			title                                    
+			description
+			videoId
+			teacher
+			challenge
+		}
+	}
+`)

@@ -21,8 +21,22 @@ module.exports = {
 					600: "#121214",
 					700: "#09090a"
 				}
-			}
+			},
+			fontFamily: {
+				'roboto': ['Roboto', 'sans-serif']
+			},
+			backgroundImage: {
+        'banner': "url('/src/assets/background.png')"
+      }
 		}
+	},
+	screens: {
+		'xs': '375px',
+		'sm': '411px',
+		'md': '869px',
+		'lg': '1024px',
+		'xl': '1248px',
+		'2xl': '1536px'
 	},
   plugins: [],
 }
