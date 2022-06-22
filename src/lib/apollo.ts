@@ -13,11 +13,12 @@ export const client = new ApolloClient({
 
 export const RETRIEVE_ALL_LESSONS = gql`
 	query {
-		lessons {
+		lessons (orderBy: availableAt_ASC, stage: PUBLISHED) {
 			id
 			title
 			availableAt
 			lessonType
+			slug
 		}
 	}
 `

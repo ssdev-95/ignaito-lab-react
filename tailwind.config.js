@@ -4,9 +4,15 @@ module.exports = {
   theme: {
 		extend: {
 			colors: {
-				warning: "#fba94c",
-				error: "#f75a68",
-				blueish: "#81d8f7",
+				yellow: {
+					400: "#fba94c"
+				},
+				red: {
+					400: "#f75a68"
+				},
+				blue: {
+					400: "#81d8f7"
+				},
 				green: {
 					400: "#00b37e",
 					500: "#00875f",
@@ -23,7 +29,7 @@ module.exports = {
 				}
 			},
 			fontFamily: {
-				'roboto': ['Roboto', 'sans-serif']
+				sans: 'Roboto, sans-serif'
 			},
 			backgroundImage: {
         'banner': "url('/src/assets/background.png')"
