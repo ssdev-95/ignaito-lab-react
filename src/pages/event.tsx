@@ -14,14 +14,27 @@ type LessonResponse = {
 	lesson: Lesson;
 }
 
+const AnyLesson:Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge"> = {
+	title: '3 coisas que você precisa dominar no Javascript pra se dar bem no React',
+	description: 'A verdade é que não é preciso dominar tudo que existe em JavaScript pra começar a utilizar React.\nEntão, no vídeo de hoje, o Diego vai revelar no que você pode focar para iniciar os seus estudos de forma mais assertiva e qual a melhor ferramenta para criar um projeto nesta tecnologia.',
+	videoId: 'a2ni_JNvJYQ',
+	challenge: { URL: '' },
+	teacher: {
+		name: 'Diegón Fernandez',
+		avatarURL: 'https://github.com/diego3g.png',
+		bio: 'Co-founder and CTO at Rocketseat'
+	}
+}
+
 export function Event() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 	const [params] = useSearchParams()
+	const queryParam = params.get('s') ?? ""
 
 	const RETRIEVE_LESSON_BY_SLUG = gql`
 		query {
-			lesson (where: { slug: "${params.get('s')}"}) {
+			lesson (where: { slug: "${queryParam}"}) {
 				title                                    
 				description
 				videoId
@@ -38,11 +51,11 @@ export function Event() {
 		setIsMenuOpen(prev => !prev)
 	}
 
-	if(error) {
+	/*if(error) {
 		alert(error)
-	}
+	}*/
 
-	console.log(data)
+	//console.log(data)
 
   return (
     <div className="w-full min-h-screen flex flex-col">
@@ -59,7 +72,7 @@ export function Event() {
 						<Loader className="mt-[-80%] md:mt-[-30%]" />
 					</div>
 				) : (
-					<Video />
+					<Video lesson={AnyLesson} />
 				)}
 				<Sidebar isOpen={isMenuOpen} />
 			</main>

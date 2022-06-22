@@ -14,7 +14,7 @@ export interface Lesson {
 	videoId: string;
 	lessonType: 'class' | 'live';
 	availableAt: string;
-	teacher: Omit<Teacher, "lessons">
+	teacher: Omit<Teacher, "lessons" | "id">
 	challenge?: Challenge;
 }
 
