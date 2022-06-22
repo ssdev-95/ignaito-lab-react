@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, gql } from '@apollo/client'
 import { SmileySad } from 'phosphor-react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Video } from '../components/video'
 import { Header } from '../components/header'
 import { Sidebar } from '../components/sidebar'
-import { Loader } from '../components/loader.tsx'
-
-import { RETRIEVE_LESSON_BY_SLUG } from '../lib/apollo'
+import { Loader } from '../components/loader'
 
 import type { Lesson } from '../custom-types.d'
 
@@ -20,13 +18,31 @@ export function Event() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 	const [params] = useSearchParams()
+
+	const RETRIEVE_LESSON_BY_SLUG = gql`
+		query {
+			lesson (where: { slug: "${params.get('s')}"}) {
+				title                                    
+				description
+				videoId
+				teacher
+				challenge
+			}
+		}
+	`
 	const {data, error} = useQuery<LessonResponse>(
-		RETRIEVE_LESSON_BY_SLUG(params.get('s'))
+		RETRIEVE_LESSON_BY_SLUG
 	)
 
 	function toggleMenuOpen() {
 		setIsMenuOpen(prev => !prev)
 	}
+
+	if(error) {
+		alert(error)
+	}
+
+	console.log(data)
 
   return (
     <div className="w-full min-h-screen flex flex-col">

@@ -25,9 +25,9 @@ export function Home() {
   return (
 		<div className="bg-gray-700 bg-banner bg-[top_center] bg-no-repeat bg-cover bg-fixed">
 			<main
-				className="w-full xl:ml-auto flex flex-col lg:flex-row justify-between py-28"
+				className="w-full xl:ml-auto flex flex-col lg:flex-row justify-between py-28 lg:pr-14"
 			>
-				<section className="lg:flex-[0.6] px-14">
+				<section className="lg:flex-[0.6] px-16">
 					<img
 						className="mx-auto h-10 md:mx-0"
 						src={TikoTekoLogo}
@@ -41,7 +41,7 @@ export function Home() {
 				</section>
 				<form
 					onSubmit={handleSubmit}
-					className="w-full lg:w-132 lg:h-fit bg-gray-600 border-0 lg:border-[1px] border-gray-300 rounded-md px-16 py-8 lg:p-4 flex flex-col gap-8"
+					className="flex-[0.4] lg:h-fit bg-gray-600 border-0 lg:border-[1px] border-gray-300 rounded-md px-16 py-8 lg:p-4 flex flex-col gap-8"
 				>
 					<h1 className="text-gray-100 font-bold">Register free</h1>
 					<input

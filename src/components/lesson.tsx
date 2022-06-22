@@ -1,4 +1,4 @@
-import { ClickEvent } from 'react'
+import { MouseEvent } from 'react'
 import { CheckCircle, Lock } from 'phosphor-react'
 import { format, isFuture } from 'date-fns'
 
@@ -9,7 +9,7 @@ type LessonProps = Pick<LessonType, "title" | "slug" | "lessonType"> & {
 	availableAt: Date;
 }
 
-type AnchorEvent = ClickEvent<HTMLAnchorElement>
+type AnchorEvent = MouseEvent<HTMLAnchorElement>
 
 export function Lesson({
 	title, slug, availableAt, lessonType
@@ -29,10 +29,9 @@ export function Lesson({
 	return (
 		<a
 			href={lessonUri}
-			disabled={isContentNotAvailable}
 			onClick={handleNoRedirect}
 		>
-			<time dateTime={availableAt} className="block text-gray-400 mb-2">{dateFormatted}</time>
+			<time dateTime={availableAt.toISOString()} className="block text-gray-400 mb-2">{dateFormatted}</time>
 			<div className="border border-gray-200 rounded p-4">
 				<div className="flex items-center justify-between">
 					{isContentNotAvailable ? (
