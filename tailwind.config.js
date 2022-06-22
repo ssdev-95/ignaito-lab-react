@@ -33,7 +33,13 @@ module.exports = {
 			},
 			backgroundImage: {
         'banner': "url('/src/assets/background.png')"
-      }
+      },
+			inset: {
+				out: '-100vw'
+			},
+			transitionTimingFunction: {
+				smooth: 'cubic-bezier(0.7,0.7,0.7,0.7)'
+			}
 		}
 	},
 	screens: {

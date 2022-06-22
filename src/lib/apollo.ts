@@ -23,7 +23,7 @@ export const RETRIEVE_ALL_LESSONS = gql`
 	}
 `
 
-export const RETRIEVE_LESSON_BY_ID = (slug:string) => (gql`
+export const RETRIEVE_LESSON_BY_SLUG = (slug:string) => (gql`
 	query {
 		lessons (where: { slug: "${slug}"}) {
 			title                                    

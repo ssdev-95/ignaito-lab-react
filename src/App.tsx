@@ -1,14 +1,26 @@
-/*import {
+import {
 	BrowserRouter,
-	Routes, Route
+	Routes,
+	Route
 } from 'react-router-dom'
 
-import { Home } from './pages/home'*/
+import { Home } from './pages/home'
 import { Event } from './pages/event'
 
 function App() {
   return (
-    <Event />
+		<BrowserRouter>
+			<Routes>
+				<Route
+					path="/"
+					element={<Home />}
+				/>
+				<Route
+					path="/lesson"
+					element={<Event />}
+				/>
+			</Routes>
+		</BrowserRouter>
   )
 }
 

@@ -13,6 +13,7 @@
     "graphql": "^16.5.0",
     "phosphor-react": "^1.4.1",
     "react": "^18.0.0",
+    "react-content-loader": "^6.2.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0"
   },

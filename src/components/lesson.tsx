@@ -1,5 +1,7 @@
+import { ClickEvent } from 'react'
 import { CheckCircle, Lock } from 'phosphor-react'
 import { format, isFuture } from 'date-fns'
+
 import { Lesson as LessonType } from '../custom-types.d'
 
 
@@ -7,16 +9,28 @@ type LessonProps = Pick<LessonType, "title" | "slug" | "lessonType"> & {
 	availableAt: Date;
 }
 
+type AnchorEvent = ClickEvent<HTMLAnchorElement>
+
 export function Lesson({
 	title, slug, availableAt, lessonType
 }:LessonProps) {
 	const dateFormatted = format(availableAt, "EEE' • 'MMM dd' • 'k'h'mm")
 	const isContentNotAvailable = isFuture(availableAt)
 
+	const lessonUri = `/lesson?s=${slug}`
+
+	function handleNoRedirect(event:AnchorEvent) {
+		if(isContentNotAvailable) {
+			event.preventDefault()
+			return
+		}
+	}
+
 	return (
 		<a
-			href="https://rocketseat.com.br/"
-			target="__blank"
+			href={lessonUri}
+			disabled={isContentNotAvailable}
+			onClick={handleNoRedirect}
 		>
 			<time dateTime={availableAt} className="block text-gray-400 mb-2">{dateFormatted}</time>
 			<div className="border border-gray-200 rounded p-4">
@@ -32,8 +46,8 @@ export function Lesson({
 							Content available
 						</span>
 					)}
-					<span className="px-2 py-1/2 border border-green-400 rounded-md text-gray-100">
-						{lessonType === 'live' ? 'LIVE' : 'PRATICAL'}
+					<span className={["px-2 py-1/2 border border-green-400 rounded-md", lessonType === "live" ? "text-green-500" : "text-gray-100"].join(" ")}>
+						{lessonType === 'live' ? 'LIVE' : 'PRATICAL LESSON'}
 					</span>
 				</div>
 				<strong className="block text-gray-300 mt-4">
