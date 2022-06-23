@@ -16,6 +16,7 @@ import { useQuery } from '@apollo/client'
 
 import { ErrBoundary } from './error'
 import { Footer } from '../components/footer'
+import { Loader } from '../components/loader'
 import {
 	RETRIEVE_LESSON_BY_SLUG,
 	POLL_INTERVAL
@@ -40,7 +41,7 @@ export function Video({ slug }:VideoProps) {
 		}
 	)
 
-	if(!data && error) {
+	if(!data || !data?.lesson || error) {
 		return (
 			<div className="block flex-1 bg-gray-700 text-red-400 py-0 flex flex-col">
 				<ErrBoundary
@@ -63,19 +64,19 @@ export function Video({ slug }:VideoProps) {
 
 	return (
 		<section
-			className="block flex-1 bg-gray-700 text-gray-100 py-0 flex flex-col"
+			className="block flex-1 bg-gray-700 text-gray-100 py-0 flex flex-col items-center"
 		>
 			<div
-				className="bg-gray-800 flex justify-center"
+				className="bg-gray-800 flex justify-center w-full"
 			>
 				<div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
 					<Player>
-						<Youtube videoId={data.lesson.videoId} />
+						<Youtube videoId={data?.lesson.videoId} />
 						<DefaultUi />
 					</Player>
 				</div>
 			</div>
-			<div className="flex flex-col gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
+			<div className="flex flex-col w-full max-w-[1100px] gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
 				<div className="row-start-1 row-end-2 col-start-1 col-end-3">
 					<span className="block mb-4 font-bold">
 						{data.lesson.title}
@@ -105,7 +106,7 @@ export function Video({ slug }:VideoProps) {
 					</a>
 				</div>
 			</div>
-			<div className="w-full max-w-[1100px] mt-12 flex flex-col md:flex-row gap-6 md:gap-4 px-4 md:px-0">
+			<div className="w-full max-w-[1100px] mt-12 flex flex-col justify-center items-center md:flex-row gap-6 md:gap-4 px-4 md:px-0">
 				<a
 					href=""
 					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100"
