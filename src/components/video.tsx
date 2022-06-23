@@ -3,7 +3,6 @@ import {
 	Lightning,
 	FileArrowDown,
 	CaretRight,
-	SmileySad
 } from 'phosphor-react'
 
 /* @vite-ignore */
@@ -15,9 +14,12 @@ import {
 
 import { useQuery } from '@apollo/client'
 
-import { Loader } from './loader'
+import { ErrBoundary } from './error'
 import { Footer } from '../components/footer'
-import { RETRIEVE_LESSON_BY_SLUG } from '../lib/apollo'
+import {
+	RETRIEVE_LESSON_BY_SLUG,
+	POLL_INTERVAL
+} from '../lib/apollo'
 import type { Lesson } from '../custom-types.d'
 
 import '@vime/core/themes/default.css'
@@ -31,24 +33,30 @@ type VideoProps = {
 }
 
 export function Video({ slug }:VideoProps) {
-	const { data, error } = useQuery<VideoQueryResponse>(
+	const { data, error, loading } = useQuery<VideoQueryResponse>(
 		RETRIEVE_LESSON_BY_SLUG, {
-			variables: { slug: slug }
+			variables: { slug: slug },
+			pollInterval: POLL_INTERVAL
 		}
 	)
 
-	if(error) {
-		alert(error)
-	}
-
-	if(!data) {
+	if(!data && error) {
 		return (
 			<div className="block flex-1 bg-gray-700 text-red-400 py-0 flex flex-col">
-				<div className="h-full max-h-[60vh] bg-gray-500 flex flex-col items-center justify-center gap-12">
-					<SmileySad size={128} />
-					<p className="text-3xl">Something went wrong!</p>
-				</div>
-				<Loader className="px-8 md:px-16" />
+				<ErrBoundary
+					title="Video couldn't be loaded."
+				/>
+			</div>
+		)
+	}
+
+	if(loading) {
+		return (
+			<div
+				className="w-full max-w-[1100px] p-12 block"
+			>
+				<Loader />
+				<Loader />
 			</div>
 		)
 	}
@@ -72,7 +80,7 @@ export function Video({ slug }:VideoProps) {
 					<span className="block mb-4 font-bold">
 						{data.lesson.title}
 					</span>
-					<p className="text-sm text-gray-300 font-thin">{data.lesson.description}</p>
+					<p className="text-sm text-gray-300 font-thin leading-relaxed">{data.lesson.description}</p>
 				</div>
 				<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
 					<img
@@ -97,15 +105,15 @@ export function Video({ slug }:VideoProps) {
 					</a>
 				</div>
 			</div>
-			<div className="w-full max-w-[1100px] mt-12 flex flex-col md:flex-row justify-center gap-6 md:gap-4">
+			<div className="w-full max-w-[1100px] mt-12 flex flex-col md:flex-row gap-6 md:gap-4 px-4 md:px-0">
 				<a
 					href=""
-					className="h-36 flex-1 flex items-center justify-stretch gap-2 text-gray-100"
+					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100"
 				>
 					<div className="h-full p-2 flex items-center justify-center bg-green-500">
 						<FileArrowDown size={40} />
 					</div>
-					<span classlName="flex-1 text-md block">
+					<span className="flex-1 text-md block">
 						Complemment Material
 						<span className="block mt-2 text-xs text-gray-300">Get the complement material to boost development</span>
 					</span>
@@ -116,13 +124,13 @@ export function Video({ slug }:VideoProps) {
 
 				<a
 					href=""
-					className="h-36 flex-1 flex items-center justify-stretch gap-2 text-gray-100"
+					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100"
 				>
 					<div className="h-full p-2 flex items-center justify-center bg-green-500">
 						<FileArrowDown size={40} />
 					</div>
 
-					<span classlName="flex-1 text-md block">
+					<span className="flex-1 text-md block">
 						Exclusive wallpapers
 						<span className="block mt-2 text-xs text-gray-300">
 							Download TikoTeko's exclusive wallpapers and customize your machine

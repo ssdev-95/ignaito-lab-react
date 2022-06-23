@@ -7,7 +7,6 @@ export function Loader(props:LoaderProps) {
 	return (
 		<ContentLoader
 			speed={3}
-			height={400}
 			width="100%"
 			viewBox="0 0 400 160"
 			backgroundColor="#a6a6a6"

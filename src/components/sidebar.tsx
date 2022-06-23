@@ -1,6 +1,9 @@
 import { useQuery, gql } from '@apollo/client'
 import { Lesson } from './lesson'
-import { RETRIEVE_ALL_LESSONS } from '../lib/apollo'
+import {
+	RETRIEVE_ALL_LESSONS,
+	POLL_INTERVAL
+} from '../lib/apollo'
 import { Lesson as LessonType } from '../custom-types.d'
 
 type LessonQueryResponse = {
@@ -14,7 +17,7 @@ interface SidebarProps {
 export function Sidebar({ isOpen }:SidebarProps) {
 	const { data } = useQuery<LessonQueryResponse>(
 		RETRIEVE_ALL_LESSONS,
-		{ pollInterval: 60 * 60 * 24 * 7 * 1000 }
+		{ pollInterval: POLL_INTERVAL }
 	)
 	return (
 		<aside className={["block w-full md:w-[358px] fixed md:static bg-gray-600 px-8 [@media(max-width:869px)]:h-full transition-[left] smooth delay-700 z-50", `${isOpen ? "" : "[@media(max-width:869px)]:left-out"}`].join(" ")}>

@@ -1,24 +1,41 @@
 import { FormEvent } from 'react'
+import { useQuery } from '@apollo/client'
 
-import {
-	Link,
-	useNavigate
-} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Footer } from '../components/footer'
 import TikoTekoLogo from '../assets/tiko-teko-logo.svg'
 import CodeBanner from '../assets/banner.png'
 
+import {
+	GET_OLDEST_LESSONS_SLUGS,
+	POLL_INTERVAL
+} from '../lib/apollo'
+
 type SubmitEvent = FormEvent<HTMLFormElement>
+
+type LessonSlug = {
+	slug: string;
+}
 
 export function Home() {
 	const navigate = useNavigate()
+
+	const { data } = useQuery<{ lessons:LessonSlug[] }>(GET_OLDEST_LESSONS_SLUGS, {
+		variables: { availableAt: new Date() }
+	})
+
 	function handleSubmit(event:SubmitEvent) {
 		event.preventDefault()
 		event.target.reset()
 
+		const slug = data?.lessons[0].slug ?? ""
+
 		setTimeout(
-			()=>navigate("/lesson", { replace: false }),
+			()=>navigate(
+				`/event/lesson/${slug}`,
+				{ replace: false }
+			),
 			500
 		)
 	}

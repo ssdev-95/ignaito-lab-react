@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { Video } from '../components/video'
 import { Header } from '../components/header'
 import { Sidebar } from '../components/sidebar'
+import { ErrBoundary } from '../components/error'
 
 export function Event() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,9 +28,10 @@ export function Event() {
 				{slug ? (
 					<Video slug={slug} />
 				) : (
-					<div className="flex-1 text-gray-100">
-						<p>Deu ruim</p>
-					</div>
+					<ErrBoundary
+						title="No video selected!"
+						className="flex-1 max-h-[50vh] grid place-items-center text-blue-400 text-center py-8"
+					/>
 				)}
 				<Sidebar isOpen={isMenuOpen} />
 			</main>
