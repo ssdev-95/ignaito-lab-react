@@ -2,50 +2,91 @@ import {
 	DiscordLogo,
 	Lightning,
 	FileArrowDown,
-	CaretRight
+	CaretRight,
+	SmileySad
 } from 'phosphor-react'
 
+/* @vite-ignore */
+import {
+	DefaultUi,
+	Player,
+	Youtube
+} from '@vime/react'
+
+import { useQuery } from '@apollo/client'
+
+import { Loader } from './loader'
 import { Footer } from '../components/footer'
+import { RETRIEVE_LESSON_BY_SLUG } from '../lib/apollo'
 import type { Lesson } from '../custom-types.d'
 
-type VideoProps = {
+import '@vime/core/themes/default.css'
+
+type VideoQueryResponse = {
 	lesson: Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge">;
 }
 
-export function Video({ lesson }:VideoProps) {
-	const videoURL = `https://youtube.com/watch?v=${lesson.videoId}&feature=emb_title`
+type VideoProps = {
+	slug: string;
+}
+
+export function Video({ slug }:VideoProps) {
+	const { data, error } = useQuery<VideoQueryResponse>(
+		RETRIEVE_LESSON_BY_SLUG, {
+			variables: { slug: slug }
+		}
+	)
+
+	if(error) {
+		alert(error)
+	}
+
+	if(!data) {
+		return (
+			<div className="block flex-1 bg-gray-700 text-red-400 py-0 flex flex-col">
+				<div className="h-full max-h-[60vh] bg-gray-500 flex flex-col items-center justify-center gap-12">
+					<SmileySad size={128} />
+					<p className="text-3xl">Something went wrong!</p>
+				</div>
+				<Loader className="px-8 md:px-16" />
+			</div>
+		)
+	}
+
 	return (
 		<section
 			className="block flex-1 bg-gray-700 text-gray-100 py-0 flex flex-col"
 		>
-			<video
-				type="video/webm"
-				height={300}
-				width={400}
-				className="w-full h-auto bg-gray-500"
+			<div
+				className="bg-gray-800 flex justify-center"
 			>
-				<source src={videoURL} />
-			</video>
+				<div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
+					<Player>
+						<Youtube videoId={data.lesson.videoId} />
+						<DefaultUi />
+					</Player>
+				</div>
+			</div>
 			<div className="flex flex-col gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
 				<div className="row-start-1 row-end-2 col-start-1 col-end-3">
 					<span className="block mb-4 font-bold">
-						{lesson.title}
+						{data.lesson.title}
 					</span>
-					<p className="text-sm text-gray-300 font-thin">{lesson.description}</p>
+					<p className="text-sm text-gray-300 font-thin">{data.lesson.description}</p>
 				</div>
 				<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
 					<img
-						src={lesson.teacher.avatarURL}
+						src={data.lesson.teacher.avatarURL}
 						className="h-16 w-auto rounded-full border-4 border-blue-400"
 					/>
 					<strong className="text-2xl text-gray-100">
-						{lesson.teacher.name}
+						{data.lesson.teacher.name}
 						<span className="block mt-2 text-gray-400 text-sm font-thin">
-							{lesson.teacher.bio}
+							{data.lesson.teacher.bio}
 						</span>
 					</strong>
 				</div>
-				<div className="md:row-start-1 md:row-end-2 col-start-3 col-end-4 flex flex-col gap-4">
+				<div className="md:row-start-1 mt-12 md:mt-0 md:row-end-2 col-start-3 col-end-4 flex flex-col gap-4">
 					<a className="px-1 py-4 text-sm font-bold bg-green-400 rounded-md flex gap-2 items-center justify-center" href="">
 						<DiscordLogo size={20} />
 					 DISCORD COMMUNITY
@@ -56,23 +97,47 @@ export function Video({ lesson }:VideoProps) {
 					</a>
 				</div>
 			</div>
-			<div>
+			<div className="w-full max-w-[1100px] mt-12 flex flex-col md:flex-row justify-center gap-6 md:gap-4">
 				<a
 					href=""
-					className=""
+					className="h-36 flex-1 flex items-center justify-stretch gap-2 text-gray-100"
 				>
-					<div>
-						<FileArrowDown size={24} />
+					<div className="h-full p-2 flex items-center justify-center bg-green-500">
+						<FileArrowDown size={40} />
 					</div>
-					<span>
+					<span classlName="flex-1 text-md block">
 						Complemment Material
-						<span>Get the complement material to boost development</span>
+						<span className="block mt-2 text-xs text-gray-300">Get the complement material to boost development</span>
 					</span>
-					<div>
-						<CaretRight size={24} />
+					<div className="h-full p-4 flex items-center justify-center">
+						<CaretRight size={24} className="text-blue-400" />
 					</div>
-				</a>	
+				</a>
+
+				<a
+					href=""
+					className="h-36 flex-1 flex items-center justify-stretch gap-2 text-gray-100"
+				>
+					<div className="h-full p-2 flex items-center justify-center bg-green-500">
+						<FileArrowDown size={40} />
+					</div>
+
+					<span classlName="flex-1 text-md block">
+						Exclusive wallpapers
+						<span className="block mt-2 text-xs text-gray-300">
+							Download TikoTeko's exclusive wallpapers and customize your machine
+						</span>
+					</span>
+
+					<div className="h-full p-4 flex items-center justify-center">
+						<CaretRight
+							size={24}
+							className="text-blue-400"
+						/>
+					</div>
+				</a>
 			</div>
+			<Footer />
 		</section>
 	)
 }

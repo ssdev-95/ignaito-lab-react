@@ -16,7 +16,11 @@ function App() {
 					element={<Home />}
 				/>
 				<Route
-					path="/lesson"
+					path="/event"
+					element={<Event />}
+				/>
+				<Route
+					path="/event/lesson/:slug"
 					element={<Event />}
 				/>
 			</Routes>
