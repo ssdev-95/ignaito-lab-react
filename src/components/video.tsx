@@ -41,16 +41,6 @@ export function Video({ slug }:VideoProps) {
 		}
 	)
 
-	if(!data || !data?.lesson || error) {
-		return (
-			<div className="block flex-1 bg-gray-700 text-red-400 py-0 flex flex-col">
-				<ErrBoundary
-					title="Video couldn't be loaded."
-				/>
-			</div>
-		)
-	}
-
 	if(loading) {
 		return (
 			<div
@@ -58,6 +48,17 @@ export function Video({ slug }:VideoProps) {
 			>
 				<Loader />
 				<Loader />
+			</div>
+		)
+	}
+
+	if(!data || !data?.lesson || error) {
+		return (
+			<div className="block flex-1 bg-gray-700 text-red-400 py-8 flex flex-col items-center">
+				<ErrBoundary
+					className="flex justify-center"
+					title="Video couldn't be loaded."
+				/>
 			</div>
 		)
 	}
