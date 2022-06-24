@@ -6,25 +6,17 @@ import {
 	Image
 } from 'phosphor-react'
 
-/* @vite-ignore */
-import {
-	DefaultUi,
-	Player,
-	Youtube
-} from '@vime/react'
-
 import { useQuery } from '@apollo/client'
 
 import { ErrBoundary } from './error'
 import { Footer } from '../components/footer'
 import { Loader } from '../components/loader'
+import { Player } from '../components/player'
 import {
 	RETRIEVE_LESSON_BY_SLUG,
 	POLL_INTERVAL
 } from '../lib/apollo'
 import type { Lesson } from '../custom-types.d'
-
-import '@vime/core/themes/default.css'
 
 type VideoQueryResponse = {
 	lesson: Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge">;
@@ -68,16 +60,7 @@ export function Video({ slug }:VideoProps) {
 		<section
 			className="block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col items-center"
 		>
-			<div
-				className="bg-gray-800 flex justify-center w-full"
-			>
-				<div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
-					<Player>
-						<Youtube videoId={data?.lesson.videoId} />
-						<DefaultUi />
-					</Player>
-				</div>
-			</div>
+			<Player videoId={data.lesson.videoId} />
 			<div className="flex flex-col w-full max-w-[1100px] gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
 				<div className="row-start-1 row-end-2 col-start-1 col-end-3">
 					<span className="block mb-4 font-bold">
