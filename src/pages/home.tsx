@@ -68,17 +68,17 @@ export function Home() {
 				>
 					<h1 className="text-gray-100 font-bold">Register free</h1>
 					<input
-						required
 						type="text"
 						value={name}
+						minLength={10}
 						placeholder="Full name"
 						onChange={e=>setName(e.target.value)}
 						className="w-full h-12 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 					/>
 					<input
-						required
 						type="email"
 						value={email}
+						minLength={16}
 						placeholder="Your best email"
 						onChange={e=>setEmail(e.target.value)}
 						className="w-full h-12 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 blur:border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
