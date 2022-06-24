@@ -22,11 +22,14 @@ export function Event() {
 				isMenuOpen={isMenuOpen}
 				handleOpenMenu={toggleMenuOpen}
 			/>
-			<main
+			<main 
 				className="w-full flex-1 flex bg-gray-700"
 			>
 				{slug ? (
-					<Video slug={slug} />
+					<Video
+						slug={slug}
+						isMenuOpen={isMenuOpen}
+					/>
 				) : (
 					<ErrBoundary
 						title="No video selected!"

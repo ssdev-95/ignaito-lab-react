@@ -20,13 +20,24 @@ import type { Lesson } from '../custom-types.d'
 
 type VideoQueryResponse = {
 	lesson: Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge">;
+	isMenuOpen: boolean;
 }
 
 type VideoProps = {
 	slug: string;
 }
 
-export function Video({ slug }:VideoProps) {
+function renderBreaks(text:string) {
+	return (
+		<p className="text-sm text-gray-300 font-thin leading-relaxed" dangerouslySetInnerHTML={{
+			__html:text.replaceAll("*", "<br />")
+		}}/>
+	)
+}
+
+export function Video({
+	slug, isMenuOpen
+}:VideoProps) {
 	const { data, error, loading } = useQuery<VideoQueryResponse>(
 		RETRIEVE_LESSON_BY_SLUG, {
 			variables: { slug: slug },
@@ -57,16 +68,17 @@ export function Video({ slug }:VideoProps) {
 	}
 
 	return (
-		<section
-			className="block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col items-center"
-		>
+		<section className={[
+				"block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col items-center",
+				isMenuOpen ? "hidden" : ""
+		].join(" ")}>
 			<Player videoId={data.lesson.videoId} />
 			<div className="flex flex-col w-full max-w-[1100px] gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
 				<div className="row-start-1 row-end-2 col-start-1 col-end-3">
 					<span className="block mb-4 font-bold">
 						{data.lesson.title}
 					</span>
-					<p className="text-sm text-gray-300 font-thin leading-relaxed">{data.lesson.description}</p>
+					{renderBreaks(data.lesson.description)}
 				</div>
 				<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
 					<img

@@ -20,7 +20,7 @@ export function Lesson({
 	lessonType, onRedirect
 }:LessonProps) {
 	const params = useParams<{ slug :string }>()
-	const dateFormatted = format(availableAt, "EEE' • 'MMM dd' • 'k'h'mm")
+	const dateFormatted = format(availableAt, "EEE' • 'MMM dd', 'yyyy' • 'k'h'mm")
 	const isContentNotAvailable = isFuture(availableAt)
 
 	const lessonUri = `/event/lesson/${slug}`
