@@ -20,11 +20,11 @@ import type { Lesson } from '../custom-types.d'
 
 type VideoQueryResponse = {
 	lesson: Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge">;
-	isMenuOpen: boolean;
 }
 
 type VideoProps = {
 	slug: string;
+	isMenuOpen: boolean;
 }
 
 function renderBreaks(text:string) {
