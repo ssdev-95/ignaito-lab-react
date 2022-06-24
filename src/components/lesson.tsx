@@ -43,7 +43,7 @@ export function Lesson({
 			<time dateTime={availableAt.toISOString()} className="block text-gray-400 mb-2">{dateFormatted}</time>
 			<div className={[
 				"rounded p-4 relative",
-				params.slug === slug ? "bg-green-400 border-0" : "border border-gray-200 group-hover:border-green-400 after:content-[U+1F890] after:text-red-500 after:absolute after:left-[-100%] after:z-50"
+				params.slug === slug ? "overflow-visible bg-green-400 border-0 before:content-[' '] before:absolute before:w-4 before:h-4 before:bg-green-400 before:z-[100] before:rotate-45 before:left-0 before:top-[50%] before:translate-y-[-10px] before:translate-x-[-50%]" : "border border-gray-200 group-hover:border-green-400 before:rounded-sm"
 			].join(" ")}>
 				<div className="flex items-center justify-between">
 					{isContentNotAvailable ? (

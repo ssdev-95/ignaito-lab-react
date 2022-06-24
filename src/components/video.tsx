@@ -69,11 +69,11 @@ export function Video({
 
 	return (
 		<section className={[
-				"block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col justify-start items-center gap-3",
+				"block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col items-center",
 				isMenuOpen ? "mb:hidden" : ""
 		].join(" ")}>
 			<Player videoId={data.lesson.videoId} />
-			<div className="flex flex-col w-full max-w-[1100px] gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:gap-3 p-4 lg:px-8">
+			<div className="flex flex-col w-full max-w-[1100px] gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
 				<div className="row-start-1 row-end-2 col-start-1 col-end-3">
 					<span className="block mb-4 font-bold">
 						{data.lesson.title}
@@ -103,7 +103,7 @@ export function Video({
 					</a>
 				</div>
 			</div>
-			<div className="w-full max-w-[1100px] mt-12 flex flex-col justify-center items-center md:flex-row gap-6 md:gap-4 px-4 md:px-0 lg:px-8">
+			<div className="w-full max-w-[1100px] mt-12 flex flex-col justify-center items-center md:flex-row gap-6 md:gap-4 px-4 md:px-0">
 				<a
 					href=""
 					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100 bg-gray-600 hover:bg-gray-500 rounded overflow-hidden"
