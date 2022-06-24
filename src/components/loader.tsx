@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react'
 import ContentLoader from 'react-content-loader'
 
-type LoaderProps = HTMLAttributes<HTMLDivElement>
+type LoaderProps = HTMLAttributes<SVGElement>
 
 export function Loader(props:LoaderProps) {
 	return (
