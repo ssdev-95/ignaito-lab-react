@@ -3,6 +3,7 @@ import {
 	Lightning,
 	FileArrowDown,
 	CaretRight,
+	Image
 } from 'phosphor-react'
 
 /* @vite-ignore */
@@ -44,7 +45,7 @@ export function Video({ slug }:VideoProps) {
 	if(loading) {
 		return (
 			<div
-				className="w-full max-w-[1100px] p-12 block"
+				className="w-full max-w-[1100px] p-12 block mb:py-[calc(4.35rem+32px)]"
 			>
 				<Loader />
 				<Loader />
@@ -54,7 +55,7 @@ export function Video({ slug }:VideoProps) {
 
 	if(!data || !data?.lesson || error) {
 		return (
-			<div className="block flex-1 bg-gray-700 text-red-400 py-8 flex flex-col items-center">
+			<div className="block flex-1 bg-gray-700 text-red-400 pb-8 mb:pt-[calc(4.35rem+33px)] flex flex-col items-center">
 				<ErrBoundary
 					className="flex justify-center"
 					title="Video couldn't be loaded."
@@ -65,7 +66,7 @@ export function Video({ slug }:VideoProps) {
 
 	return (
 		<section
-			className="block flex-1 bg-gray-700 text-gray-100 py-0 flex flex-col items-center"
+			className="block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col items-center"
 		>
 			<div
 				className="bg-gray-800 flex justify-center w-full"
@@ -97,11 +98,11 @@ export function Video({ slug }:VideoProps) {
 					</strong>
 				</div>
 				<div className="md:row-start-1 mt-12 md:mt-0 md:row-end-2 col-start-3 col-end-4 flex flex-col gap-4">
-					<a className="px-1 py-4 text-sm font-bold bg-green-400 rounded-md flex gap-2 items-center justify-center" href="">
+					<a className="px-1 py-4 text-sm font-bold bg-green-400 rounded-md flex gap-2 items-center justify-center hover:bg-green-500" href="">
 						<DiscordLogo size={20} />
 					 DISCORD COMMUNITY
 					</a>
-					<a className="px-1 py-4 text-sm font-bold text-blue-400 border-2 border-blue-400 rounded-md flex gap-2 items-center justify-center" href="">
+					<a className="px-1 py-4 text-sm font-bold text-blue-400 border-2 border-blue-400 hover:bg-blue-400 hover:text-gray-700 rounded-md flex gap-2 items-center justify-center" href="">
 						<Lightning size={20}/>
 						TO THE CHALLENGE
 					</a>
@@ -110,14 +111,14 @@ export function Video({ slug }:VideoProps) {
 			<div className="w-full max-w-[1100px] mt-12 flex flex-col justify-center items-center md:flex-row gap-6 md:gap-4 px-4 md:px-0">
 				<a
 					href=""
-					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100"
+					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100 bg-gray-600 hover:bg-gray-500 rounded overflow-hidden"
 				>
 					<div className="h-full p-2 flex items-center justify-center bg-green-500">
 						<FileArrowDown size={40} />
 					</div>
-					<span className="flex-1 text-md block">
+					<span className="flex-1 text-lg font-bold block">
 						Complemment Material
-						<span className="block mt-2 text-xs text-gray-300">Get the complement material to boost development</span>
+						<span className="block mt-2 mb:text-sm text-xs text-gray-300 font-thin">Get the complement material to boost development</span>
 					</span>
 					<div className="h-full p-4 flex items-center justify-center">
 						<CaretRight size={24} className="text-blue-400" />
@@ -126,15 +127,15 @@ export function Video({ slug }:VideoProps) {
 
 				<a
 					href=""
-					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100"
+					className="h-36 md:h-32 flex-none md:flex-1 flex items-center justify-stretch gap-2 text-gray-100 bg-gray-600 hover:bg-gray-500 rounded overflow-hidden"
 				>
 					<div className="h-full p-2 flex items-center justify-center bg-green-500">
-						<FileArrowDown size={40} />
+						<Image size={40} />
 					</div>
 
-					<span className="flex-1 text-md block">
+					<span className="flex-1 text-lg font-bold block">
 						Exclusive wallpapers
-						<span className="block mt-2 text-xs text-gray-300">
+						<span className="block mt-2 mb:text-sm text-xs text-gray-300 font-thin">
 							Download TikoTeko's exclusive wallpapers and customize your machine
 						</span>
 					</span>

@@ -39,6 +39,9 @@ module.exports = {
 			},
 			transitionTimingFunction: {
 				smooth: 'cubic-bezier(0.7,0.7,0.7,0.7)'
+			},
+			screens: {
+				'mb': { 'max': '869px' }
 			}
 		}
 	},

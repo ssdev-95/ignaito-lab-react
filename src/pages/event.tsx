@@ -30,10 +30,13 @@ export function Event() {
 				) : (
 					<ErrBoundary
 						title="No video selected!"
-						className="flex-1 max-h-[50vh] grid place-items-center text-blue-400 text-center py-8"
+						className="flex-1 max-h-[50vh] grid place-items-center text-blue-400 text-center pb-8 mb:pt-[calc(4.35rem+33px)]"
 					/>
 				)}
-				<Sidebar isOpen={isMenuOpen} />
+				<Sidebar
+					isOpen={isMenuOpen}
+					onClose={toggleMenuOpen}
+				/>
 			</main>
     </div>
   )

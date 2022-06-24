@@ -12,7 +12,7 @@ export function Header({
 }:HeaderProps) {
 	return (
 		<header
-			className="w-[100vw] 2xl-[1248px] flex items-center justify-between md:justify-center py-[1.45rem] px-4 bg-gray-600 border-b border-gray-400"
+			className="w-[100vw] 2xl-[1248px] flex items-center justify-between md:justify-center py-[1.45rem] px-4 bg-gray-600 border-b border-gray-400 md:static mb:fixed mb:z-[100]"
 		>
 			<img
 				className="h-[1.45rem] lg:h-[2rem] w-auto"

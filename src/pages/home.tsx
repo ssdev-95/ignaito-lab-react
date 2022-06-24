@@ -65,13 +65,13 @@ export function Home() {
 						required
 						type="text"
 						placeholder="Full name"
-						className="w-full h-12 placeholder:text-gray-400 text-blue-400 indent-4 bg-gray-700"
+						className="w-full h-12 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 					/>
 					<input
 						required
 						type="email"
 						placeholder="Your best email"
-						className="w-full h-12 placeholder:text-gray-400 text-blue-400 indent-4 bg-gray-700"
+						className="w-full h-12 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 blur:border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 					/>
 					<button className="w-full h-10 bg-green-500 text-gray-100 font-bold rounded-md">ENSURE MY VAGA</button>
 				</form>

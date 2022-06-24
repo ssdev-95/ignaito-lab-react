@@ -1,5 +1,7 @@
 import { MouseEvent } from 'react'
-import  { useParams } from 'react-router-dom'
+import  {
+	useParams, Link
+} from 'react-router-dom'
 import { CheckCircle, Lock } from 'phosphor-react'
 import { format, isFuture } from 'date-fns'
 
@@ -8,12 +10,14 @@ import { Lesson as LessonType } from '../custom-types.d'
 
 type LessonProps = Pick<LessonType, "title" | "slug" | "lessonType"> & {
 	availableAt: Date;
+	onRedirect: ()=>void;
 }
 
 type AnchorEvent = MouseEvent<HTMLAnchorElement>
 
 export function Lesson({
-	title, slug, availableAt, lessonType
+	title, slug, availableAt,
+	lessonType, onRedirect
 }:LessonProps) {
 	const params = useParams<{ slug :string }>()
 	const dateFormatted = format(availableAt, "EEE' • 'MMM dd' • 'k'h'mm")
@@ -26,11 +30,13 @@ export function Lesson({
 			event.preventDefault()
 			return
 		}
+
+		onRedirect()
 	}
 
 	return (
-		<a
-			href={lessonUri}
+		<Link
+			to={lessonUri}
 			onClick={handleNoRedirect}
 			className="group"
 		>
@@ -68,6 +74,6 @@ export function Lesson({
 					{title}
 				</strong>	
 			</div>
-		</a>
+		</Link>
 	)
 }
