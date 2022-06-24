@@ -1,5 +1,5 @@
-import { FormEvent } from 'react'
-import { useQuery } from '@apollo/client'
+import { FormEvent, useState } from 'react'
+import { useMutation } from '@apollo/client'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -8,7 +8,7 @@ import TikoTekoLogo from '../assets/tiko-teko-logo.svg'
 import CodeBanner from '../assets/banner.png'
 
 import {
-	GET_OLDEST_LESSONS_SLUGS,
+	SUBSCRIBE_MUTATION,
 	POLL_INTERVAL
 } from '../lib/apollo'
 
@@ -20,24 +20,30 @@ type LessonSlug = {
 
 export function Home() {
 	const navigate = useNavigate()
+	const [name, setName] = useState("")
+	const [email, setEmail] = useState("")
 
-	const { data } = useQuery<{ lessons:LessonSlug[] }>(GET_OLDEST_LESSONS_SLUGS, {
-		variables: { availableAt: new Date() }
-	})
+	const [subscribe, { loading }] = useMutation(
+		SUBSCRIBE_MUTATION
+	)
 
-	function handleSubmit(event:SubmitEvent) {
+	async function handleSubmit(event:SubmitEvent) {
 		event.preventDefault()
-		event.target.reset()
+		
+		//data.createSubscriber.id
 
-		const slug = data?.lessons[0].slug ?? ""
+		await subscribe({
+			variables: { name, email}
+		})
 
-		setTimeout(
-			()=>navigate(
-				`/event/lesson/${slug}`,
-				{ replace: false }
-			),
-			500
-		)
+		setTimeout(() => {
+			setName("")
+			setEmail("")
+
+			navigate('/event', {
+				replace: false
+			})
+		},500)
 	}
   return (
 		<div className="bg-gray-700 bg-banner bg-[top_center] bg-no-repeat bg-cover bg-fixed">
@@ -64,16 +70,35 @@ export function Home() {
 					<input
 						required
 						type="text"
+						value={name}
 						placeholder="Full name"
+						onChange={e=>setName(e.target.value)}
 						className="w-full h-12 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 					/>
 					<input
 						required
 						type="email"
+						value={email}
 						placeholder="Your best email"
+						onChange={e=>setEmail(e.target.value)}
 						className="w-full h-12 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 blur:border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 					/>
-					<button className="w-full h-10 bg-green-500 text-gray-100 font-bold rounded-md">ENSURE MY VAGA</button>
+					<button
+						disabled={loading}
+						className="w-full h-10 bg-green-400 hover:bg-green-500 text-gray-100 font-bold rounded-md disabled:bg-green-500"
+					>
+						{loading ? (
+							<div
+								className="w-8 h-8 relative mx-auto"
+							>
+								<div
+									className="w-full h-full bg-grad rounded-full animate-spin after:content-[''] after:h-[90%] after:w-[90%] after:rounded-full after:bg-green-500 after:absolute after:left-[50%] after:-translate-x-[50%] after:top-[50%] after:-translate-y-[50%]"
+								/>
+							</div>
+						) : (
+							"ENSURE MY VAGA"
+						)}
+					</button>
 				</form>
 			</main>
 			<img

@@ -5,11 +5,15 @@ import {
 } from '@apollo/client'
 
 const URI = import.meta.env.VITE_GRAPHQL_URI!
+const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN
 
 export const POLL_INTERVAL = 60*60*24*7*1000
 
 export const client = new ApolloClient({
 	uri: URI,
+	headers: {
+		'Authorization': `Bearer ${ACCESS_TOKEN}`
+	},
 	cache: new InMemoryCache()
 })
 
@@ -44,10 +48,11 @@ export const RETRIEVE_ALL_LESSONS = gql`
 	}
 `
 
-export const GET_OLDEST_LESSONS_SLUGS = gql`
-	query ($availableAt: DateTime) {
-	  lessons(where: { availableAt_lt: $availableAt }, orderBy: availableAt_ASC) {
-			slug
-		}
-	}
+export const SUBSCRIBE_MUTATION = gql`
+	mutation ($name:String!, $email:String!) {
+		createSubscriber (data: { email:$email, name:$name }) {
+    id
+  }
+}
+
 `
