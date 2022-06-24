@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+	scroll-behavior: smooth;
+}
+
+a, button {
+	transition: all 0.2s cubic-bezier(0.7,0.7,0.7,0.7);
+}
