@@ -57,10 +57,10 @@ export function Home() {
 						alt="Tiko Teko Lab logo"
 					/>
 					<h1 className="text-gray-100 text-4xl text-center lg:text-left my-16">
-						Build an <span className="text-blue-400">entire application</span>, from scratch, with <span className="text-blue-400">React JS</span>
+						Build an <span className="text-blue-400">entire application</span>, from scratch, with <span className="text-blue-400">React</span>.
 					</h1>
 
-					<p className="text-gray-300 mb-16 mt-[-2rem]">In only one week you'll dominate by doing on of most used techs with high demand to acess the best job opportunities.</p>
+					<p className="text-gray-300 mb-16 mt-[-2rem]">In only one week you'll dominate by doing with one of most used techs with high demand and acess to the best job opportunities.</p>
 				</section>
 				<form
 					onSubmit={handleSubmit}
