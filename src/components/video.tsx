@@ -9,9 +9,11 @@ import {
 import { useQuery } from '@apollo/client'
 
 import { ErrBoundary } from './error'
-import { Footer } from '../components/footer'
-import { Loader } from '../components/loader'
-import { Player } from '../components/player'
+import { Footer } from './footer'
+import { Loader } from './loader'
+import { Player } from './player'
+import { Avatar } from './avatar'
+
 import {
 	RETRIEVE_LESSON_BY_SLUG,
 	POLL_INTERVAL
@@ -81,9 +83,8 @@ export function Video({
 					{renderBreaks(data.lesson.description)}
 				</div>
 				<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
-					<img
-						src={data.lesson.teacher.avatarURL}
-						className="h-16 w-auto rounded-full border-4 border-blue-400"
+					<Avatar
+						source={data.lesson.teacher.avatarURL}
 					/>
 					<strong className="text-2xl text-gray-100">
 						{data.lesson.teacher.name}

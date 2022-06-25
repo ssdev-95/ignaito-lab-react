@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 
 import { Footer } from '../components/footer'
+import { Loader } from '../components/loader'
 import TikoTekoLogo from '../assets/tiko-teko-logo.svg'
 import CodeBanner from '../assets/banner.png'
 
@@ -88,13 +89,10 @@ export function Home() {
 						className="w-full h-10 bg-green-400 hover:bg-green-500 text-gray-100 font-bold rounded-md disabled:bg-green-500"
 					>
 						{loading ? (
-							<div
-								className="w-8 h-8 relative mx-auto"
-							>
-								<div
-									className="w-full h-full bg-grad rounded-full animate-spin after:content-[''] after:h-[90%] after:w-[90%] after:rounded-full after:bg-green-500 after:absolute after:left-[50%] after:-translate-x-[50%] after:top-[50%] after:-translate-y-[50%]"
-								/>
-							</div>
+							<Loader
+								type="spinner"
+								className="after:bg-green-500"
+							/>
 						) : (
 							"ENSURE MY VAGA"
 						)}

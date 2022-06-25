@@ -1,9 +1,25 @@
 import { HTMLAttributes } from 'react'
 import ContentLoader from 'react-content-loader'
 
-type LoaderProps = HTMLAttributes<SVGElement>
+type LoaderProps = HTMLAttributes<SVGElement> & {
+	type?: "spinner" | "skeleton";
+}
 
-export function Loader(props:LoaderProps) {
+export function Loader({
+	type, after, ...props
+}:LoaderProps) {
+	if(type === "spinner") {
+		return (
+			<div
+				className="w-10 h-10 relative mx-auto flex items-center justify-center"
+			>
+				<div
+					className={["w-8 h-8 bg-grad rounded-full animate-spin after:content-[''] after:h-[90%] after:w-[90%] after:rounded-full after:absolute after:left-[50%] after:-translate-x-[50%] after:top-[50%] after:-translate-y-[50%]", props.className].join(" ")}
+				/>
+			</div>
+		)
+	}
+
 	return (
 		<ContentLoader
 			speed={3}
