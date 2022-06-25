@@ -6,9 +6,7 @@ import {
 	Image
 } from 'phosphor-react'
 
-import { ErrBoundary } from './error'
 import { Footer } from './footer'
-import { Loader } from './loader'
 import { Player } from './player'
 import { Avatar } from './avatar'
 
@@ -17,9 +15,15 @@ import {
 } from '../lib/graphql/generated'
 
 type VideoProps = {
-	error: any;
-	lesson: Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge">;
-	loading: boolean;
+	title:string;
+	description?:string | null;
+	videoId:string;
+	teacher?:{
+		name:string;
+		bio:string;
+		avatarURL:string;
+	} | null;
+	challenge?: { url:string; } | null;
 	isMenuOpen: boolean;
 }
 
@@ -32,21 +36,11 @@ function renderBreaks(text:string) {
 }
 
 export function Video({
-	lesson, isMenuOpen, loading, error
+	title, description, videoId,
+	teacher, challenge, isMenuOpen
 }:VideoProps) {
 
-	if(loading) {
-		return (
-			<div
-				className="w-full max-w-[1100px] p-12 block mb:py-[calc(4.35rem+32px)]"
-			>
-				<Loader />
-				<Loader />
-			</div>
-		)
-	}
-
-	if(!lesson || error) {
+	/*if(!lesson) {
 		return (
 			<div className="block flex-1 bg-gray-700 text-red-400 pb-8 mb:pt-[calc(4.35rem+33px)] flex flex-col items-center">
 				<ErrBoundary
@@ -55,30 +49,30 @@ export function Video({
 				/>
 			</div>
 		)
-	}
+	}*/
 
 	return (
 		<section className={[
 				"block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col items-center",
 				isMenuOpen ? "mb:hidden" : ""
 		].join(" ")}>
-			<Player videoId={lesson.videoId} />
+			<Player videoId={videoId} />
 			<div className="flex flex-col w-full max-w-[1100px] gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
 				<div className="row-start-1 row-end-2 col-start-1 col-end-3">
 					<span className="block mb-4 font-bold">
-						{lesson.title}
+						{title}
 					</span>
-					{renderBreaks(lesson.description ?? "Description not available at this time.")}
+					{renderBreaks(description ?? "Description not available at this time.")}
 				</div>
-				{lesson.teacher && (
+				{teacher && (
 					<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
 						<Avatar
-							source={lesson.teacher?.avatarURL}
+							source={teacher.avatarURL}
 						/>
 						<strong className="text-2xl text-gray-100">
-							{lesson.teacher.name}
+							{teacher.name}
 							<span className="block mt-2 text-gray-400 text-sm font-thin">
-								{lesson.teacher?.bio}
+								{teacher.bio}
 							</span>
 						</strong>
 					</div>

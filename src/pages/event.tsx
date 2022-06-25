@@ -9,6 +9,7 @@ import {
 import { Video } from '../components/video'
 import { Header } from '../components/header'
 import { Sidebar } from '../components/sidebar'
+import { Loader } from '../components/loader'
 import { ErrBoundary } from '../components/error'
 
 import {
@@ -31,22 +32,22 @@ export function Event() {
 		pollInterval: POLL_INTERVAL   
 	})
 
-	if(!data) {
-		alert(data)
-	}
-
-	/*/const lessonNotAvailable = isFuture(
-		new Date(data?.lesson.availableAt!)
+	const lessonNotAvailable = isFuture(
+		new Date(data?.lesson?.availableAt!)
 	)
 
 	if(lessonNotAvailable) {
 		return (
 			<Navigate
-				to="/"
+				to="/event"
 				replace={true}
 			/>
 		)
-	}*/
+	}
+
+	if(error) {
+		alert(error)
+	}
 
   return (
     <div className="w-full min-h-screen flex flex-col">
@@ -58,18 +59,29 @@ export function Event() {
 				className="w-full flex-1 flex bg-gray-700"
 			>
 				{slug ? (
-				  data ? (
-						<Video
-							lesson={data.lesson}
-							isMenuOpen={isMenuOpen}
-							loading={loading}
-							error={error}
-						/>
+				  loading ? (
+						<div
+							className="w-full max-w-[1100px] p-12 block mb:py-[calc(4.35rem+32px)]"
+						>
+							<Loader />
+							<Loader />
+						</div>
 					) : (
-						<ErrBoundary
-							title="Couldn't load lesson!"
-							className="flex-1 max-h-[50vh] grid place-items-center text-blue-400 text-center pb-8 mb:pt-[calc(4.35rem+33px)]"
-						/>
+						(data && data.lesson && !error) ? (
+							<Video
+								title={data.lesson.title}
+								description={data.lesson.description}
+								videoId={data.lesson.videoId}
+								teacher={data.lesson.teacher}
+								challenge={data.lesson.challenge}
+								isMenuOpen={isMenuOpen}
+							/>
+						) : (
+							<ErrBoundary
+								title="Couldn't load lesson!"
+								className="flex-1 max-h-[50vh] grid place-items-center text-blue-400 text-center pb-8 mb:pt-[calc(4.35rem+33px)]"
+							/>
+						)
 					)
 				) : (
 					<ErrBoundary
