@@ -9,9 +9,8 @@ import TikoTekoLogo from '../assets/tiko-teko-logo.svg'
 import CodeBanner from '../assets/banner.png'
 
 import {
-	SUBSCRIBE_MUTATION,
-	POLL_INTERVAL
-} from '../lib/apollo'
+	useCreateSubscriberMutationMutation
+} from '../lib/graphql/generated'
 
 type SubmitEvent = FormEvent<HTMLFormElement>
 
@@ -24,9 +23,7 @@ export function Home() {
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
 
-	const [subscribe, { loading }] = useMutation(
-		SUBSCRIBE_MUTATION
-	)
+	const [subscribe, { loading }] = useCreateSubscriberMutationMutation()
 
 	async function handleSubmit(event:SubmitEvent) {
 		event.preventDefault()

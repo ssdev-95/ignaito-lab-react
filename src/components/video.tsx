@@ -15,9 +15,10 @@ import { Player } from './player'
 import { Avatar } from './avatar'
 
 import {
-	RETRIEVE_LESSON_BY_SLUG,
-	POLL_INTERVAL
-} from '../lib/apollo'
+	useQueryLessonBySlugQuery
+} from '../lib/graphql/generated'
+
+import { POLL_INTERVAL } from '../lib/apollo'
 import type { Lesson } from '../custom-types.d'
 
 type VideoQueryResponse = {
@@ -40,12 +41,10 @@ function renderBreaks(text:string) {
 export function Video({
 	slug, isMenuOpen
 }:VideoProps) {
-	const { data, error, loading } = useQuery<VideoQueryResponse>(
-		RETRIEVE_LESSON_BY_SLUG, {
+	const { data, error, loading } = useQueryLessonBySlugQuery({
 			variables: { slug: slug },
 			pollInterval: POLL_INTERVAL
-		}
-	)
+	})
 
 	if(loading) {
 		return (
