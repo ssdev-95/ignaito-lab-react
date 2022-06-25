@@ -13,13 +13,13 @@ import { Player } from './player'
 import { Avatar } from './avatar'
 
 import {
-	useQueryLessonBySlugQuery
+	Lesson
 } from '../lib/graphql/generated'
 
-import { POLL_INTERVAL } from '../lib/apollo'
-
 type VideoProps = {
-	slug: string;
+	error: any;
+	lesson: Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge">;
+	loading: boolean;
 	isMenuOpen: boolean;
 }
 
@@ -32,12 +32,8 @@ function renderBreaks(text:string) {
 }
 
 export function Video({
-	slug, isMenuOpen
+	lesson, isMenuOpen, loading, error
 }:VideoProps) {
-	const { data, error, loading } = useQueryLessonBySlugQuery({
-			variables: { slug: slug },
-			pollInterval: POLL_INTERVAL
-	})
 
 	if(loading) {
 		return (
@@ -50,12 +46,12 @@ export function Video({
 		)
 	}
 
-	if(!data || !data?.lesson || error) {
+	if(!lesson || error) {
 		return (
 			<div className="block flex-1 bg-gray-700 text-red-400 pb-8 mb:pt-[calc(4.35rem+33px)] flex flex-col items-center">
 				<ErrBoundary
 					className="flex justify-center"
-					title="Video couldn't be loaded."
+					title="Lesson couldn't be loaded."
 				/>
 			</div>
 		)
@@ -66,23 +62,23 @@ export function Video({
 				"block flex-1 bg-gray-700 text-gray-100 mb:pt-[calc(4.35rem+1px)] flex flex-col items-center",
 				isMenuOpen ? "mb:hidden" : ""
 		].join(" ")}>
-			<Player videoId={data.lesson.videoId} />
+			<Player videoId={lesson.videoId} />
 			<div className="flex flex-col w-full max-w-[1100px] gap-6 md:grid md:grid-rows-2 md:grid-cols-3 md:max-h-[1024px] md:gap-3 p-4">
 				<div className="row-start-1 row-end-2 col-start-1 col-end-3">
 					<span className="block mb-4 font-bold">
-						{data.lesson.title}
+						{lesson.title}
 					</span>
-					{renderBreaks(data.lesson.description ?? "Description not available at this time.")}
+					{renderBreaks(lesson.description ?? "Description not available at this time.")}
 				</div>
-				{data.lesson.teacher && (
+				{lesson.teacher && (
 					<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
 						<Avatar
-							source={data.lesson.teacher?.avatarURL}
+							source={lesson.teacher?.avatarURL}
 						/>
 						<strong className="text-2xl text-gray-100">
-							{data.lesson.teacher.name}
+							{lesson.teacher.name}
 							<span className="block mt-2 text-gray-400 text-sm font-thin">
-								{data.lesson.teacher?.bio}
+								{lesson.teacher?.bio}
 							</span>
 						</strong>
 					</div>

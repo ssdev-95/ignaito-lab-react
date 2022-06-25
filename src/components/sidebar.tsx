@@ -1,7 +1,7 @@
 import { Lesson } from './lesson'
 
 import {
-	useQueryAllLessonsQuery
+	useGetAllLessonsQuery
 } from '../lib/graphql/generated'
 
 import { POLL_INTERVAL } from '../lib/apollo'
@@ -14,7 +14,7 @@ interface SidebarProps {
 export function Sidebar({
 	isOpen, onClose
 }:SidebarProps) {
-	const { data } = useQueryAllLessonsQuery({
+	const { data } = useGetAllLessonsQuery({
 		pollInterval: POLL_INTERVAL
 	})
 

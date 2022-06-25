@@ -11,6 +11,12 @@ import { Header } from '../components/header'
 import { Sidebar } from '../components/sidebar'
 import { ErrBoundary } from '../components/error'
 
+import {
+	useGetLessonBySlugQuery
+} from '../lib/graphql/generated'
+
+import { POLL_INTERVAL } from '../lib/apollo'
+
 export function Event() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -20,7 +26,20 @@ export function Event() {
 		setIsMenuOpen(prev => !prev)
 	}
 
-	/*if(lesssonnotavailable) {
+	const { data, error, loading } = useGetLessonBySlugQuery({
+		variables: { slug: slug },
+		pollInterval: POLL_INTERVAL   
+	})
+
+	if(!data) {
+		alert(data)
+	}
+
+	/*/const lessonNotAvailable = isFuture(
+		new Date(data?.lesson.availableAt!)
+	)
+
+	if(lessonNotAvailable) {
 		return (
 			<Navigate
 				to="/"
@@ -39,10 +58,19 @@ export function Event() {
 				className="w-full flex-1 flex bg-gray-700"
 			>
 				{slug ? (
-					<Video
-						slug={slug}
-						isMenuOpen={isMenuOpen}
-					/>
+				  data ? (
+						<Video
+							lesson={data.lesson}
+							isMenuOpen={isMenuOpen}
+							loading={loadinng}
+							error={error}
+						/>
+					) : (
+						<ErrBoundary
+							title="Couldn't load lesson!"
+							className="flex-1 max-h-[50vh] grid place-items-center text-blue-400 text-center pb-8 mb:pt-[calc(4.35rem+33px)]"
+						/>
+					)
 				) : (
 					<ErrBoundary
 						title="No video selected!"

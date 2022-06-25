@@ -7,7 +7,7 @@ import TikoTekoLogo from '../assets/tiko-teko-logo.svg'
 import CodeBanner from '../assets/banner.png'
 
 import {
-	useCreateSubscriberMutationMutation
+	 useCreateSubscriberMutation
 } from '../lib/graphql/generated'
 
 type SubmitEvent = FormEvent<HTMLFormElement>
@@ -21,7 +21,7 @@ export function Home() {
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
 
-	const [subscribe, { loading }] = useCreateSubscriberMutationMutation()
+	const [subscribe, { loading }] =  useCreateSubscriberMutation()
 
 	async function handleSubmit(event:SubmitEvent) {
 		event.preventDefault()
