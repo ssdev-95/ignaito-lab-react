@@ -1,4 +1,4 @@
-query QueryAllLessons {
+query GetAllLessons {
 	lessons (orderBy: availableAt_ASC, stage:    PUBLISHED) {
 		id
 		title

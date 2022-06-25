@@ -5568,63 +5568,63 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
-export type CreateSubscriberMutationMutationVariables = Exact<{
+export type CreateSubscriberMutationVariables = Exact<{
   name: Scalars['String'];
   email: Scalars['String'];
 }>;
 
 
-export type CreateSubscriberMutationMutation = { __typename?: 'Mutation', createSubscriber?: { __typename?: 'Subscriber', id: string } | null };
+export type CreateSubscriberMutation = { __typename?: 'Mutation', createSubscriber?: { __typename?: 'Subscriber', id: string } | null };
 
-export type QueryAllLessonsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllLessonsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QueryAllLessonsQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', id: string, title: string, availableAt?: any | null, lessonType: LessonType, slug: string }> };
+export type GetAllLessonsQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', id: string, title: string, availableAt?: any | null, lessonType: LessonType, slug: string }> };
 
-export type QueryLessonBySlugQueryVariables = Exact<{
+export type GetLessonBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type QueryLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename?: 'Lesson', title: string, description?: string | null, videoId: string, challenge?: { __typename?: 'Challenge', url: string } | null, teacher?: { __typename?: 'Teacher', name: string, bio: string, avatarURL: string } | null } | null };
+export type GetLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename?: 'Lesson', title: string, description?: string | null, videoId: string, challenge?: { __typename?: 'Challenge', url: string } | null, teacher?: { __typename?: 'Teacher', name: string, bio: string, avatarURL: string } | null } | null };
 
 
-export const CreateSubscriberMutationDocument = gql`
-    mutation CreateSubscriberMutation($name: String!, $email: String!) {
+export const CreateSubscriberDocument = gql`
+    mutation CreateSubscriber($name: String!, $email: String!) {
   createSubscriber(data: {email: $email, name: $name}) {
     id
   }
 }
     `;
-export type CreateSubscriberMutationMutationFn = Apollo.MutationFunction<CreateSubscriberMutationMutation, CreateSubscriberMutationMutationVariables>;
+export type CreateSubscriberMutationFn = Apollo.MutationFunction<CreateSubscriberMutation, CreateSubscriberMutationVariables>;
 
 /**
- * __useCreateSubscriberMutationMutation__
+ * __useCreateSubscriberMutation__
  *
- * To run a mutation, you first call `useCreateSubscriberMutationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateSubscriberMutationMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateSubscriberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSubscriberMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createSubscriberMutationMutation, { data, loading, error }] = useCreateSubscriberMutationMutation({
+ * const [createSubscriberMutation, { data, loading, error }] = useCreateSubscriberMutation({
  *   variables: {
  *      name: // value for 'name'
  *      email: // value for 'email'
  *   },
  * });
  */
-export function useCreateSubscriberMutationMutation(baseOptions?: Apollo.MutationHookOptions<CreateSubscriberMutationMutation, CreateSubscriberMutationMutationVariables>) {
+export function useCreateSubscriberMutation(baseOptions?: Apollo.MutationHookOptions<CreateSubscriberMutation, CreateSubscriberMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateSubscriberMutationMutation, CreateSubscriberMutationMutationVariables>(CreateSubscriberMutationDocument, options);
+        return Apollo.useMutation<CreateSubscriberMutation, CreateSubscriberMutationVariables>(CreateSubscriberDocument, options);
       }
-export type CreateSubscriberMutationMutationHookResult = ReturnType<typeof useCreateSubscriberMutationMutation>;
-export type CreateSubscriberMutationMutationResult = Apollo.MutationResult<CreateSubscriberMutationMutation>;
-export type CreateSubscriberMutationMutationOptions = Apollo.BaseMutationOptions<CreateSubscriberMutationMutation, CreateSubscriberMutationMutationVariables>;
-export const QueryAllLessonsDocument = gql`
-    query QueryAllLessons {
+export type CreateSubscriberMutationHookResult = ReturnType<typeof useCreateSubscriberMutation>;
+export type CreateSubscriberMutationResult = Apollo.MutationResult<CreateSubscriberMutation>;
+export type CreateSubscriberMutationOptions = Apollo.BaseMutationOptions<CreateSubscriberMutation, CreateSubscriberMutationVariables>;
+export const GetAllLessonsDocument = gql`
+    query GetAllLessons {
   lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
     id
     title
@@ -5636,33 +5636,33 @@ export const QueryAllLessonsDocument = gql`
     `;
 
 /**
- * __useQueryAllLessonsQuery__
+ * __useGetAllLessonsQuery__
  *
- * To run a query within a React component, call `useQueryAllLessonsQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryAllLessonsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAllLessonsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllLessonsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQueryAllLessonsQuery({
+ * const { data, loading, error } = useGetAllLessonsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useQueryAllLessonsQuery(baseOptions?: Apollo.QueryHookOptions<QueryAllLessonsQuery, QueryAllLessonsQueryVariables>) {
+export function useGetAllLessonsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllLessonsQuery, GetAllLessonsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryAllLessonsQuery, QueryAllLessonsQueryVariables>(QueryAllLessonsDocument, options);
+        return Apollo.useQuery<GetAllLessonsQuery, GetAllLessonsQueryVariables>(GetAllLessonsDocument, options);
       }
-export function useQueryAllLessonsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryAllLessonsQuery, QueryAllLessonsQueryVariables>) {
+export function useGetAllLessonsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllLessonsQuery, GetAllLessonsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryAllLessonsQuery, QueryAllLessonsQueryVariables>(QueryAllLessonsDocument, options);
+          return Apollo.useLazyQuery<GetAllLessonsQuery, GetAllLessonsQueryVariables>(GetAllLessonsDocument, options);
         }
-export type QueryAllLessonsQueryHookResult = ReturnType<typeof useQueryAllLessonsQuery>;
-export type QueryAllLessonsLazyQueryHookResult = ReturnType<typeof useQueryAllLessonsLazyQuery>;
-export type QueryAllLessonsQueryResult = Apollo.QueryResult<QueryAllLessonsQuery, QueryAllLessonsQueryVariables>;
-export const QueryLessonBySlugDocument = gql`
-    query QueryLessonBySlug($slug: String) {
+export type GetAllLessonsQueryHookResult = ReturnType<typeof useGetAllLessonsQuery>;
+export type GetAllLessonsLazyQueryHookResult = ReturnType<typeof useGetAllLessonsLazyQuery>;
+export type GetAllLessonsQueryResult = Apollo.QueryResult<GetAllLessonsQuery, GetAllLessonsQueryVariables>;
+export const GetLessonBySlugDocument = gql`
+    query GetLessonBySlug($slug: String) {
   lesson(where: {slug: $slug}) {
     title
     description
@@ -5680,29 +5680,29 @@ export const QueryLessonBySlugDocument = gql`
     `;
 
 /**
- * __useQueryLessonBySlugQuery__
+ * __useGetLessonBySlugQuery__
  *
- * To run a query within a React component, call `useQueryLessonBySlugQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryLessonBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetLessonBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLessonBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQueryLessonBySlugQuery({
+ * const { data, loading, error } = useGetLessonBySlugQuery({
  *   variables: {
  *      slug: // value for 'slug'
  *   },
  * });
  */
-export function useQueryLessonBySlugQuery(baseOptions?: Apollo.QueryHookOptions<QueryLessonBySlugQuery, QueryLessonBySlugQueryVariables>) {
+export function useGetLessonBySlugQuery(baseOptions?: Apollo.QueryHookOptions<GetLessonBySlugQuery, GetLessonBySlugQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryLessonBySlugQuery, QueryLessonBySlugQueryVariables>(QueryLessonBySlugDocument, options);
+        return Apollo.useQuery<GetLessonBySlugQuery, GetLessonBySlugQueryVariables>(GetLessonBySlugDocument, options);
       }
-export function useQueryLessonBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryLessonBySlugQuery, QueryLessonBySlugQueryVariables>) {
+export function useGetLessonBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLessonBySlugQuery, GetLessonBySlugQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryLessonBySlugQuery, QueryLessonBySlugQueryVariables>(QueryLessonBySlugDocument, options);
+          return Apollo.useLazyQuery<GetLessonBySlugQuery, GetLessonBySlugQueryVariables>(GetLessonBySlugDocument, options);
         }
-export type QueryLessonBySlugQueryHookResult = ReturnType<typeof useQueryLessonBySlugQuery>;
-export type QueryLessonBySlugLazyQueryHookResult = ReturnType<typeof useQueryLessonBySlugLazyQuery>;
-export type QueryLessonBySlugQueryResult = Apollo.QueryResult<QueryLessonBySlugQuery, QueryLessonBySlugQueryVariables>;
+export type GetLessonBySlugQueryHookResult = ReturnType<typeof useGetLessonBySlugQuery>;
+export type GetLessonBySlugLazyQueryHookResult = ReturnType<typeof useGetLessonBySlugLazyQuery>;
+export type GetLessonBySlugQueryResult = Apollo.QueryResult<GetLessonBySlugQuery, GetLessonBySlugQueryVariables>;
