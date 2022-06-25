@@ -62,7 +62,7 @@ export function Event() {
 						<Video
 							lesson={data.lesson}
 							isMenuOpen={isMenuOpen}
-							loading={loadinng}
+							loading={loading}
 							error={error}
 						/>
 					) : (
