@@ -3,6 +3,7 @@ query GetLessonBySlug ($slug: String) {
 		title
 		description
 		videoId
+		availableAt
 		challenge {
 			url
 		}
