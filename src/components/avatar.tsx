@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
+import { User } from 'phosphor-react'
 import { Loader } from './loader'
 
 type AvatarProps = {
-	source: string;
+	source: string | undefined;
 }
 
 export function Avatar({ source }:AvatarProps) {
@@ -28,10 +29,18 @@ export function Avatar({ source }:AvatarProps) {
 					className="after:bg-blue-400 after:h-15 after:w-15"
 				/>
 			) : (
-				<img
-					src={source}
-					className="h-full w-full"      
-				/>
+				source ? (
+					<img
+						src={source}
+						className="h-full w-full"      
+					/>
+				) : (
+					<User
+						size={16}
+						weight="fill"
+						className="text-gray-100"
+					/>
+				)
 			)}
 		</div>
 	)

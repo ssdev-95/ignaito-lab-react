@@ -6,7 +6,7 @@ type LoaderProps = HTMLAttributes<SVGElement> & {
 }
 
 export function Loader({
-	type, after, ...props
+	type, ...props
 }:LoaderProps) {
 	if(type === "spinner") {
 		return (

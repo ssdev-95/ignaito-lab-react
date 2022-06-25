@@ -1,15 +1,10 @@
-import { useQuery, gql } from '@apollo/client'
 import { Lesson } from './lesson'
+
 import {
 	useQueryAllLessonsQuery
 } from '../lib/graphql/generated'
 
 import { POLL_INTERVAL } from '../lib/apollo'
-import { Lesson as LessonType } from '../custom-types.d'
-
-type LessonQueryResponse = {
-	lessons: Pick<LessonType, "id" | "title" | "slug" | "lessonType" | "availableAt">[]
-}
 
 interface SidebarProps {
 	isOpen: boolean;

@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { SmileySad } from 'phosphor-react'
-import { useParams } from 'react-router-dom'
+import { isFuture } from 'date-fns'
+
+import {
+	useParams, Navigate
+} from 'react-router-dom'
 
 import { Video } from '../components/video'
 import { Header } from '../components/header'
@@ -15,6 +19,15 @@ export function Event() {
 	function toggleMenuOpen() {
 		setIsMenuOpen(prev => !prev)
 	}
+
+	/*if(lesssonnotavailable) {
+		return (
+			<Navigate
+				to="/"
+				replace={true}
+			/>
+		)
+	}*/
 
   return (
     <div className="w-full min-h-screen flex flex-col">

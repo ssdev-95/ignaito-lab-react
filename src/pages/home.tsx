@@ -1,6 +1,4 @@
 import { FormEvent, useState } from 'react'
-import { useMutation } from '@apollo/client'
-
 import { useNavigate } from 'react-router-dom'
 
 import { Footer } from '../components/footer'
@@ -27,8 +25,6 @@ export function Home() {
 
 	async function handleSubmit(event:SubmitEvent) {
 		event.preventDefault()
-		
-		//data.createSubscriber.id
 
 		await subscribe({
 			variables: { name, email}

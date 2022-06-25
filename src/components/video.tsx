@@ -6,8 +6,6 @@ import {
 	Image
 } from 'phosphor-react'
 
-import { useQuery } from '@apollo/client'
-
 import { ErrBoundary } from './error'
 import { Footer } from './footer'
 import { Loader } from './loader'
@@ -19,11 +17,6 @@ import {
 } from '../lib/graphql/generated'
 
 import { POLL_INTERVAL } from '../lib/apollo'
-import type { Lesson } from '../custom-types.d'
-
-type VideoQueryResponse = {
-	lesson: Pick<Lesson, "title" | "description" | "videoId" | "teacher" | "challenge">;
-}
 
 type VideoProps = {
 	slug: string;
@@ -79,19 +72,21 @@ export function Video({
 					<span className="block mb-4 font-bold">
 						{data.lesson.title}
 					</span>
-					{renderBreaks(data.lesson.description)}
+					{renderBreaks(data.lesson.description ?? "Description not available at this time.")}
 				</div>
-				<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
-					<Avatar
-						source={data.lesson.teacher.avatarURL}
-					/>
-					<strong className="text-2xl text-gray-100">
-						{data.lesson.teacher.name}
-						<span className="block mt-2 text-gray-400 text-sm font-thin">
-							{data.lesson.teacher.bio}
-						</span>
-					</strong>
-				</div>
+				{data.lesson.teacher && (
+					<div className="md:row-start-2 md:row-end-3 col-start-1 col-end-3 flex gap-4 items-center">
+						<Avatar
+							source={data.lesson.teacher?.avatarURL}
+						/>
+						<strong className="text-2xl text-gray-100">
+							{data.lesson.teacher.name}
+							<span className="block mt-2 text-gray-400 text-sm font-thin">
+								{data.lesson.teacher?.bio}
+							</span>
+						</strong>
+					</div>
+				)}
 				<div className="md:row-start-1 mt-12 md:mt-0 md:row-end-2 col-start-3 col-end-4 flex flex-col gap-4">
 					<a className="px-1 py-4 text-sm font-bold bg-green-400 rounded-md flex gap-2 items-center justify-center hover:bg-green-500" href="">
 						<DiscordLogo size={20} />
