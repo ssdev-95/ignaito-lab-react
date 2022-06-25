@@ -1,0 +1,5 @@
+mutation CreateSubscriberMutation ($name:String!, $email:String!) {
+	createSubscriber (data: { email:$email, name:$name }) {
+		id
+	}
+}
