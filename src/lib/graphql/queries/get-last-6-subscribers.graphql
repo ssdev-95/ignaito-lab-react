@@ -1,0 +1,7 @@
+query GetLast6Subscribers {
+  subscribers(last: 6) {
+    avatarUrl
+    id
+    name
+  }
+}
