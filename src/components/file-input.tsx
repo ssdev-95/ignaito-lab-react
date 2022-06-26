@@ -38,6 +38,10 @@ export function FileInput({
 				'upload',
 				imageUploadData
 			).catch(err => console.log(err))
+
+			if(data) {
+				console.log(data.url)
+			}
 		} catch (err:any) {
 			console.log(err)
 		} finally {
