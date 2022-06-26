@@ -4,10 +4,8 @@ const TOKEN = import.meta.env.VITE_ACCESS_TOKEN
 const URI = import.meta.env.VITE_GRAPHQL_URI
 
 export const api = create({
-	baseURL: URI
+	baseURL: URI,
+	headers: {
+		'Authorization': `Bearer ${TOKEN}`
+	}
 })
-
-api
-  .defaults
-	.headers
-	.common['Authorization'] = `Bearer ${TOKEN}`

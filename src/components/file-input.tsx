@@ -4,9 +4,9 @@ import {
 	useState
 } from 'react'
 
-import fs from 'fs'
-
 import { Plus } from 'phosphor-react'
+
+import { Loader } from './loader'
 import { api } from '../lib/api'
 
 type FileInputProps = {
@@ -18,15 +18,18 @@ export function FileInput({
 	className, onChange
 }:FileInputProps) {
 	const [imagePreview, setImagePreview] = useState<any>(null)
+	const [loading, setLoading] = useState(false)
 	async function handleChange(e:ChangeEvent) {
 		const file = e.currentTarget.files[0]
 		const objectURL = URL.createObjectURL(
 			file
 		)
 
-		setImagePreview(objectURL)
+		console.log(api.defaults)
 		
 		try {
+			setLoading(true)
+			setImagePreview(objectURL)
 			const imageUploadData = new FormData()
 		
 			imageUploadData.append(
@@ -34,19 +37,18 @@ export function FileInput({
 				file
 			)
 
-			const { data } = await api.post(
+			const data = await api.post(
 				'upload',
 				imageUploadData
-			).catch(err => console.log(err))
+			)
 
-			if(data) {
-				console.log(data.url)
-			}
+			console.log(data)
 		} catch (err:any) {
 			console.log(err)
 		} finally {
 			setImagePreview(null)
 			revokeObjectURL(objectURL)
+			setLoading(false)
 		}
 	}
 
@@ -56,16 +58,23 @@ export function FileInput({
 			className
 		].join(" ")}>
 			<div className="w-full h-full flex flex-col items-center justify-center gap-4 text-gray-400 absolute">
-				{imagePreview ? (
-					<img
-						src={imagePreview}
-						className="h-full w-full object-cover"
+				{loading ? (
+					<Loader
+						type="spinner"
+						className="after:bg-gray-700"
 					/>
 				) : (
-					<>
-						<Plus size={36} weight="fill"/>
-						<p>Upload avatar</p>
-					</>
+					imagePreview ? (
+						<img
+							src={imagePreview}
+							className="h-full w-full object-cover"
+						/>
+					) : (
+						<>
+							<Plus size={36} weight="fill"/>
+							<p>Upload avatar</p>
+						</>
+					)
 				)}
 			</div>
 
