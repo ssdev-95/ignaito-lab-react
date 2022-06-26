@@ -1,5 +1,4 @@
 import {
-	HTMLAttributes,
 	ChangeEvent,
 	useState
 } from 'react'
@@ -11,7 +10,7 @@ import { api } from '../lib/api'
 
 type FileInputProps = {
 	className?: string;
-	onChange?: (event:ChangeEvent<HTMLInputElement>)=>void;
+	onChange?: () => void;
 }
 
 export function FileInput({
@@ -19,35 +18,40 @@ export function FileInput({
 }:FileInputProps) {
 	const [imagePreview, setImagePreview] = useState<any>(null)
 	const [loading, setLoading] = useState(false)
-	async function handleChange(e:ChangeEvent) {
-		const file = e.currentTarget.files[0]
+	
+	function handleChange(e:ChangeEvent<HTMLInputElement>) {
+		if(!e.target.files) return;
+
+		const file = e.target.files[0]
 		const objectURL = URL.createObjectURL(
 			file
 		)
 
-		console.log(api.defaults)
-		
 		try {
 			setLoading(true)
+			
+			
 			setImagePreview(objectURL)
-			const imageUploadData = new FormData()
+
+			let imageUploadData = new FormData()
 		
 			imageUploadData.append(
-				`${Date.now()}-subscriber-avatar`,
-				file
-			)
-
-			const data = await api.post(
 				'upload',
-				imageUploadData
+				file,
+				`${Date.now()}-subscriber-avatar`
 			)
 
-			console.log(data)
+			// const data = await api.post(
+			// 	'upload',
+			// 	imageUploadData
+			// )
+
+			console.log(imageUploadData)
 		} catch (err:any) {
 			console.log(err)
 		} finally {
 			setImagePreview(null)
-			revokeObjectURL(objectURL)
+			URL.revokeObjectURL(objectURL)
 			setLoading(false)
 		}
 	}
