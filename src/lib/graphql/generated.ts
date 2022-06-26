@@ -4146,6 +4146,7 @@ export enum Stage {
 
 export type Subscriber = Node & {
   __typename?: 'Subscriber';
+  avatarUrl: Scalars['String'];
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
   /** User that created this document */
@@ -4229,6 +4230,7 @@ export type SubscriberConnection = {
 };
 
 export type SubscriberCreateInput = {
+  avatarUrl: Scalars['String'];
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
   name: Scalars['String'];
@@ -4268,6 +4270,25 @@ export type SubscriberManyWhereInput = {
   OR?: InputMaybe<Array<SubscriberWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  avatarUrl?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  avatarUrl_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  avatarUrl_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  avatarUrl_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  avatarUrl_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  avatarUrl_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  avatarUrl_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  avatarUrl_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  avatarUrl_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  avatarUrl_starts_with?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -4379,6 +4400,8 @@ export type SubscriberManyWhereInput = {
 };
 
 export enum SubscriberOrderByInput {
+  AvatarUrlAsc = 'avatarUrl_ASC',
+  AvatarUrlDesc = 'avatarUrl_DESC',
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
   EmailAsc = 'email_ASC',
@@ -4394,6 +4417,7 @@ export enum SubscriberOrderByInput {
 }
 
 export type SubscriberUpdateInput = {
+  avatarUrl?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
@@ -4416,6 +4440,7 @@ export type SubscriberUpdateManyInlineInput = {
 };
 
 export type SubscriberUpdateManyInput = {
+  avatarUrl?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -4472,6 +4497,25 @@ export type SubscriberWhereInput = {
   OR?: InputMaybe<Array<SubscriberWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  avatarUrl?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  avatarUrl_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  avatarUrl_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  avatarUrl_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  avatarUrl_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  avatarUrl_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  avatarUrl_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  avatarUrl_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  avatarUrl_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  avatarUrl_starts_with?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -5571,6 +5615,7 @@ export enum _SystemDateTimeFieldVariation {
 export type CreateSubscriberMutationVariables = Exact<{
   name: Scalars['String'];
   email: Scalars['String'];
+  avatarUrl: Scalars['String'];
 }>;
 
 
@@ -5581,6 +5626,11 @@ export type GetAllLessonsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllLessonsQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', id: string, title: string, availableAt?: any | null, lessonType: LessonType, slug: string }> };
 
+export type GetLast6SubscribersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLast6SubscribersQuery = { __typename?: 'Query', subscribers: Array<{ __typename?: 'Subscriber', avatarUrl: string, id: string, name: string }> };
+
 export type GetLessonBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
 }>;
@@ -5590,8 +5640,8 @@ export type GetLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename
 
 
 export const CreateSubscriberDocument = gql`
-    mutation CreateSubscriber($name: String!, $email: String!) {
-  createSubscriber(data: {email: $email, name: $name}) {
+    mutation CreateSubscriber($name: String!, $email: String!, $avatarUrl: String!) {
+  createSubscriber(data: {email: $email, name: $name, avatarUrl: $avatarUrl}) {
     id
   }
 }
@@ -5613,6 +5663,7 @@ export type CreateSubscriberMutationFn = Apollo.MutationFunction<CreateSubscribe
  *   variables: {
  *      name: // value for 'name'
  *      email: // value for 'email'
+ *      avatarUrl: // value for 'avatarUrl'
  *   },
  * });
  */
@@ -5661,6 +5712,42 @@ export function useGetAllLessonsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetAllLessonsQueryHookResult = ReturnType<typeof useGetAllLessonsQuery>;
 export type GetAllLessonsLazyQueryHookResult = ReturnType<typeof useGetAllLessonsLazyQuery>;
 export type GetAllLessonsQueryResult = Apollo.QueryResult<GetAllLessonsQuery, GetAllLessonsQueryVariables>;
+export const GetLast6SubscribersDocument = gql`
+    query GetLast6Subscribers {
+  subscribers(last: 6) {
+    avatarUrl
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetLast6SubscribersQuery__
+ *
+ * To run a query within a React component, call `useGetLast6SubscribersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLast6SubscribersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLast6SubscribersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLast6SubscribersQuery(baseOptions?: Apollo.QueryHookOptions<GetLast6SubscribersQuery, GetLast6SubscribersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLast6SubscribersQuery, GetLast6SubscribersQueryVariables>(GetLast6SubscribersDocument, options);
+      }
+export function useGetLast6SubscribersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLast6SubscribersQuery, GetLast6SubscribersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLast6SubscribersQuery, GetLast6SubscribersQueryVariables>(GetLast6SubscribersDocument, options);
+        }
+export type GetLast6SubscribersQueryHookResult = ReturnType<typeof useGetLast6SubscribersQuery>;
+export type GetLast6SubscribersLazyQueryHookResult = ReturnType<typeof useGetLast6SubscribersLazyQuery>;
+export type GetLast6SubscribersQueryResult = Apollo.QueryResult<GetLast6SubscribersQuery, GetLast6SubscribersQueryVariables>;
 export const GetLessonBySlugDocument = gql`
     query GetLessonBySlug($slug: String) {
   lesson(where: {slug: $slug}) {
