@@ -35,14 +35,16 @@ export function SubscribeForm() {
 	}
 
 	return (
-		<section className="h-[376px] lg:flex-[0.3] lg:h-fit bg-gray-600 border-0 lg:border-[1px] border-gray-300 rounded-md p-4 lg:p-6 flex flex-col gap-6">
+		<section className="lg:flex-[0.3] h-fit bg-gray-600 border-0 lg:border-[1px] border-gray-300 lg:rounded-md p-4 lg:p-6 flex flex-col gap-6">
 			<h1 className="text-gray-100 font-bold">
 				Register free
 			</h1>
 			<form
 				onSubmit={handleSubmit}
-				className="w-full h-full grid gap-4 cols-3 rows-3 bg-gray-700"
+				className="w-full h-full flex flex-col gap-10"
 			>
+				<div className=" flex-1 flex gap-4">
+				<div className="flex-1 flex flex-col gap-4">
 				<input
 					type="text"
 					value={name}
@@ -51,7 +53,7 @@ export function SubscribeForm() {
 					onChange={
 						e => setName(e.target.value)
 					}
-					className="placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400 row-start-1 row-end-2 col-start-1 col-end-2"
+					className="flex-1 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 				/>
 				<input
 					type="email"
@@ -61,14 +63,16 @@ export function SubscribeForm() {
 					onChange={
 						e => setEmail(e.target.value)
 					}
-					className="placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 blur:border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400 row-start-2 row-end-3 col-start-1 col-end-2"
+					className="flex-1 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 blur:border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 				/>
+					</div>
 				<FileInput
-					className="relative row-start-2 row-end-3 col-start-3 col-end-4"
+					className="w-36 h-36 md:w-48 md:h-48 bg-gray-700 rounded group-focus:border group-focus:border-green-500 overflow-hidden"
 				/>
+				</div>
 				<button
 					disabled={loading}
-					className="bg-green-400 hover:bg-green-500 text-gray-100 font-bold rounded-md disabled:bg-green-500 col-start-1 col-end-4 row-start-3 row-end-4"
+					className="bg-green-400 hover:bg-green-500 text-gray-100 font-bold rounded-md disabled:bg-green-500 py-5 overflow-y-hidden"
 				>
 					{loading ? (
 						<Loader

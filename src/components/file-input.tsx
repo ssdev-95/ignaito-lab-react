@@ -4,7 +4,10 @@ import {
 	useState
 } from 'react'
 
+import fs from 'fs'
+
 import { Plus } from 'phosphor-react'
+import { api } from '../lib/api'
 
 type FileInputProps = {
 	className?: string;
@@ -14,18 +17,45 @@ type FileInputProps = {
 export function FileInput({
 	className, onChange
 }:FileInputProps) {
-	const [imagePreview, setImagePreview] = useState<string | File | null>(null)
-	/*async function handleChange(e:any) {
-		alert(typeof e.currentTarget.files[0])
-	}*/
+	const [imagePreview, setImagePreview] = useState<any>(null)
+	async function handleChange(e:ChangeEvent) {
+		const file = e.currentTarget.files[0]
+		const objectURL = URL.createObjectURL(
+			file
+		)
+
+		setImagePreview(objectURL)
+		
+		try {
+			const imageUploadData = new FormData()
+		
+			imageUploadData.append(
+				`${Date.now()}-subscriber-avatar`,
+				file
+			)
+
+			const { data } = await api.post(
+				'upload',
+				imageUploadData
+			).catch(err => console.log(err))
+		} catch (err:any) {
+			console.log(err)
+		} finally {
+			setImagePreview(null)
+			revokeObjectURL(objectURL)
+		}
+	}
 
 	return (
-		<label className={className}>
+		<label className={[
+			"relative overflow-hidden",
+			className
+		].join(" ")}>
 			<div className="w-full h-full flex flex-col items-center justify-center gap-4 text-gray-400 absolute">
 				{imagePreview ? (
 					<img
 						src={imagePreview}
-						className="h-full w-full"
+						className="h-full w-full object-cover"
 					/>
 				) : (
 					<>
@@ -39,12 +69,8 @@ export function FileInput({
 			<input
 				type="file"
 				accept="image/png, image/jpeg"
-				className="opacity-0"
-				onChange={e => {
-					alert(
-						typeof e.currentTarget.files[0]
-					)
-				}}
+				className="opacity-0 w-0 group"
+				onChange={handleChange}
 			/>
 		</label>
 	)
