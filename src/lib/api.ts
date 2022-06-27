@@ -1,11 +1,7 @@
 import { create } from 'axios'
 
-const TOKEN = import.meta.env.VITE_ACCESS_TOKEN
-const URI = import.meta.env.VITE_GRAPHQL_URI
+const URI = "https://api.imgbb.com/1"
 
 export const api = create({
-	baseURL: URI,
-	headers: {
-		'Authorization': `Bearer ${TOKEN}`
-	}
+	baseURL: URI
 })

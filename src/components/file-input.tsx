@@ -1,8 +1,10 @@
 import {
 	ChangeEvent,
-	useState
+	useState,
+	useCallback
 } from 'react'
 
+import { AxiosRequestConfig } from 'axios'
 import { Plus } from 'phosphor-react'
 
 import { Loader } from './loader'
@@ -10,51 +12,63 @@ import { api } from '../lib/api'
 
 type FileInputProps = {
 	className?: string;
-	onChange?: () => void;
+	onChange?: (value:string) => void;
 }
 
 export function FileInput({
 	className, onChange
 }:FileInputProps) {
-	const [imagePreview, setImagePreview] = useState<any>(null)
+	const [imagePreview, setImagePreview] = useState("")
 	const [loading, setLoading] = useState(false)
+	const [progress, setProgress] = useState(0)
 	
-	function handleChange(e:ChangeEvent<HTMLInputElement>) {
-		if(!e.target.files) return;
-
-		const file = e.target.files[0]
-		const objectURL = URL.createObjectURL(
-			file
-		)
-
-		try {
+	const handleChange = useCallback(
+		async (e:ChangeEvent<HTMLInputElement>) => {
+			if(!e.target.file.length) return;
 			setLoading(true)
-			
-			
-			setImagePreview(objectURL)
 
-			let imageUploadData = new FormData()
-		
-			imageUploadData.append(
-				'upload',
-				file,
-				`${Date.now()}-subscriber-avatar`
+			const uploadData = new FormData()
+
+			uploadData.append(
+				'image',
+				event.target.files[0]
 			)
 
-			// const data = await api.post(
-			// 	'upload',
-			// 	imageUploadData
-			// )
+			uploadData.append(
+				'key',
+				import.meta.env.VITE_IMGBB_API_KEY
+			)
 
-			console.log(imageUploadData)
-		} catch (err:any) {
-			console.log(err)
-		} finally {
-			setImagePreview(null)
-			URL.revokeObjectURL(objectURL)
-			setLoading(false)
-		}
-	}
+			const config = {
+				headers: {
+					'content-type': 'multipart/form-data'
+				},
+				onUploadProgress: (e: ProgressEvent) => {
+					setProgress(
+						Math.round(
+							(e.loaded * 100) / e.total
+						)
+					)
+				}
+			} as AxiosRequestConfig
+
+
+			try {
+				const { data } = await api.post(
+					'upload',
+					uploadData,
+					config
+				)
+
+				setImagePreview(data.url)
+			} catch (err) {
+				alert(err)
+			} finally {
+				setProgress(0)
+				setLoading(false)
+			}
+		}, []
+	)
 
 	return (
 		<label className={[
@@ -63,22 +77,18 @@ export function FileInput({
 		].join(" ")}>
 			<div className="w-full h-full flex flex-col items-center justify-center gap-4 text-gray-400 absolute">
 				{loading ? (
-					<Loader
-						type="spinner"
-						className="after:bg-gray-700"
-					/>
-				) : (
-					imagePreview ? (
-						<img
-							src={imagePreview}
-							className="h-full w-full object-cover"
+					<>
+						<Loader
+							type="spinner"
+							className="after:bg-gray-700"
 						/>
-					) : (
-						<>
-							<Plus size={36} weight="fill"/>
-							<p>Upload avatar</p>
-						</>
-					)
+						<p className="text-gray-300">{progress}</p>
+					</>
+				) : (
+					<>
+						<Plus size={36} weight="fill"/>
+						<p>Upload avatar</p>
+					</>
 				)}
 			</div>
 
