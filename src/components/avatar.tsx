@@ -4,9 +4,12 @@ import { Loader } from './loader'
 
 type AvatarProps = {
 	source: string | undefined;
+	className?: string;
 }
 
-export function Avatar({ source }:AvatarProps) {
+export function Avatar({
+	source, className
+}:AvatarProps) {
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
@@ -20,9 +23,10 @@ export function Avatar({ source }:AvatarProps) {
 	}, [])
 
 	return (
-		<div
-			className="h-16 w-16 rounded-full bg-blue-400 overflow-hidden border-4 border-blue-400 flex items-center justify-center"
-		>
+		<div className={[
+			"h-16 w-16 rounded-full bg-blue-400 overflow-hidden border-4 border-blue-400 flex items-center justify-center peer",
+			className ?? ""
+		].join(" ")}>
 			{loading ? (
 				<Loader
 					type="spinner"

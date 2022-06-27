@@ -4146,7 +4146,7 @@ export enum Stage {
 
 export type Subscriber = Node & {
   __typename?: 'Subscriber';
-  avatarUrl: Scalars['String'];
+  avatarUrl?: Maybe<Scalars['String']>;
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
   /** User that created this document */
@@ -4230,7 +4230,7 @@ export type SubscriberConnection = {
 };
 
 export type SubscriberCreateInput = {
-  avatarUrl: Scalars['String'];
+  avatarUrl?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
   name: Scalars['String'];
@@ -5629,7 +5629,7 @@ export type GetAllLessonsQuery = { __typename?: 'Query', lessons: Array<{ __type
 export type GetLast6SubscribersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLast6SubscribersQuery = { __typename?: 'Query', subscribers: Array<{ __typename?: 'Subscriber', avatarUrl: string, id: string, name: string }> };
+export type GetLast6SubscribersQuery = { __typename?: 'Query', subscribers: Array<{ __typename?: 'Subscriber', avatarUrl?: string | null, id: string }> };
 
 export type GetLessonBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
@@ -5717,7 +5717,6 @@ export const GetLast6SubscribersDocument = gql`
   subscribers(last: 6) {
     avatarUrl
     id
-    name
   }
 }
     `;
