@@ -1,4 +1,8 @@
-import { useState, FormEvent } from 'react'
+import {
+	useState,
+	FormEvent,
+	ChangeEvent
+} from 'react'
 
 import {
 	useCreateSubscriberMutation
@@ -14,6 +18,8 @@ type FormProps = {
 	onSuccess: ()=>void;
 }
 
+const alternateUrl = "https://i.ibb.co/Xz0swHX/png-20220626-165112-0000.png"
+
 export function SubscribeForm({
 	onSuccess
 }:FormProps) {
@@ -22,18 +28,43 @@ export function SubscribeForm({
 	const [avatarUrl, setAvatarUrl] = useState("")
 	const [hasSubmited, setHasSubmited] = useState(false)
 
-	const [subscribe, { loading }] =  useCreateSubscriberMutation()
+	const [subscribe, { loading, error }] =  useCreateSubscriberMutation()
 
-	function handleChange(value:string) {
+	function onUploadSuccess(value:string) {
 		setAvatarUrl(value)
+	}
+
+	function handleChange(evnt:ChangeEvent<HTMLInputElement>) {
+		const { value, name: field } = evnt.target
+		if(!value) {
+			return
+		}
+
+		if(field === "name") {
+			setName(value)
+		} else {
+			setEmail(value)
+		}
 	}
 
 	async function handleSubmit(e:FormEvent) {
 		e.preventDefault()
 
+		if(!email || !name) {
+			return
+		}
+
 		await subscribe({
-			variables: { name, email, avatarUrl }
+			variables: {
+				name,
+				email,
+				avatarUrl: avatarUrl ? avatarUrl : alternateUrl
+			}
 		})
+
+		if(error) {
+			return
+		}
 
 		setTimeout(() => {
 			setName("")
@@ -57,27 +88,25 @@ export function SubscribeForm({
 				<div className="flex-1 flex flex-col gap-4">
 				<input
 					type="text"
+					name="name"
 					value={name}
 					minLength={10}
 					placeholder="Full name"
-					onChange={
-						e => setName(e.target.value)
-					}
+					onChange={handleChange}
 					className="flex-1 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 				/>
 				<input
 					type="email"
+					name="email"
 					value={email}
 					minLength={16}
 					placeholder="Your best email"
-					onChange={
-						e => setEmail(e.target.value)
-					}
+					onChange={handleChange}
 					className="flex-1 placeholder:text-gray-400 text-gray-100 indent-4 bg-gray-700 rounded outline-0 blur:border-0 focus:border focus:border-green-500 invalid:border invalid:border-red-400"
 				/>
 					</div>
 				<FileInput
-					onChange={handleChange}
+					onChange={onUploadSuccess}
 					hasSubmited={hasSubmited}
 					className="w-36 h-36 md:w-48 md:h-48 bg-gray-700 rounded group-focus:border group-focus:border-green-500 overflow-hidden"
 				/>
