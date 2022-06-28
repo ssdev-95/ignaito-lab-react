@@ -1,5 +1,4 @@
 import { useState, FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import {
 	useCreateSubscriberMutation
@@ -11,26 +10,38 @@ import {
 
 import { Loader } from './loader'
 
-export function SubscribeForm() {
-	const navigate = useNavigate()
+type FormProps = {
+	onSuccess?: ()=>void;
+}
+
+export function SubscribeForm({
+	onSuccess
+}:FormProps) {
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
+	const [avatarUrl, setAvatarUrl] = useState("")
+	const [hasSubmited, setHasSubmited] = useState(false)
+
 	const [subscribe, { loading }] =  useCreateSubscriberMutation()
+
+	function handleChange(value:string) {
+		alert(value)
+		setAvatarUrl(value)
+	}
 
 	async function handleSubmit(e:FormEvent) {
 		e.preventDefault()
 
 		await subscribe({
-			variables: { name, email}
+			variables: { name, email, avatarUrl }
 		})
 
 		setTimeout(() => {
 			setName("")
 			setEmail("")
-
-			navigate('/event', {
-				replace: false
-			})
+			setAvatar("")
+			setHasSubmited(true)
+			onSuccess()
 		},500)
 	}
 
@@ -67,6 +78,8 @@ export function SubscribeForm() {
 				/>
 					</div>
 				<FileInput
+					onChange={handleChange}
+					hasSubmited={hasSubmited}
 					className="w-36 h-36 md:w-48 md:h-48 bg-gray-700 rounded group-focus:border group-focus:border-green-500 overflow-hidden"
 				/>
 				</div>

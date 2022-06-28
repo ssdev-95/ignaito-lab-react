@@ -36,7 +36,7 @@ export function Avatar({
 				source ? (
 					<img
 						src={source}
-						className="h-full w-full"      
+						className="h-full w-full object-cover"      
 					/>
 				) : (
 					<User

@@ -1,5 +1,6 @@
 import { Footer } from '../components/footer'
 import { Avatar } from '../components/avatar'
+import { useNavigate } from 'react-router-dom'
 
 import {
 	SubscribeForm
@@ -14,7 +15,15 @@ import TikoTekoLogo from '../assets/tiko-teko-logo.svg'
 import CodeBanner from '../assets/banner.png'
 
 export function Home() {
+	const navigate = useNavigate()
+
 	const { data } = useGetLast6SubscribersQuery({ pollInterval: POLL_INTERVAL })
+
+	function onSuccessRedirect() {
+		navigate('/event', {
+			replace: false
+		})
+	}
 
   return (
 		<div className="bg-gray-700 bg-banner bg-[top_center] bg-no-repeat bg-cover bg-fixed">
@@ -44,7 +53,9 @@ export function Home() {
 						))
 					}</div>
 				</section>
-				<SubscribeForm />
+				<SubscribeForm
+					onSuccess={onSuccessRedirect}
+				/>
 			</main>
 			<img
 				className="mb-16 md:mt-auto"

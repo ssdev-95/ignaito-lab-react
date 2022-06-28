@@ -1,7 +1,8 @@
 import {
 	ChangeEvent,
 	useState,
-	useCallback
+	useEffect,
+	useCallback,
 } from 'react'
 
 import { AxiosRequestConfig } from 'axios'
@@ -13,10 +14,11 @@ import { api } from '../lib/api'
 type FileInputProps = {
 	className?: string;
 	onChange?: (value:string) => void;
+	hasSubmited?: boolean;
 }
 
 export function FileInput({
-	className, onChange
+	className, onChange,hasSubmited
 }:FileInputProps) {
 	const [imagePreview, setImagePreview] = useState("")
 	const [loading, setLoading] = useState(false)
@@ -24,14 +26,14 @@ export function FileInput({
 	
 	const handleChange = useCallback(
 		async (e:ChangeEvent<HTMLInputElement>) => {
-			if(!e.target.file.length) return;
+			if(!e.target.files.length) return;
 			setLoading(true)
 
 			const uploadData = new FormData()
 
 			uploadData.append(
 				'image',
-				event.target.files[0]
+				e.target.files[0]
 			)
 
 			uploadData.append(
@@ -43,10 +45,10 @@ export function FileInput({
 				headers: {
 					'content-type': 'multipart/form-data'
 				},
-				onUploadProgress: (e: ProgressEvent) => {
+				onUploadProgress: (ev: ProgressEvent) => {
 					setProgress(
 						Math.round(
-							(e.loaded * 100) / e.total
+							(ev.loaded * 100) / ev.total
 						)
 					)
 				}
@@ -54,11 +56,13 @@ export function FileInput({
 
 
 			try {
-				const { data } = await api.post(
+				const {
+					data: { data }
+				} = await api.post(
 					'upload',
 					uploadData,
 					config
-				)
+				).catch(err => alert(err))
 
 				setImagePreview(data.url)
 			} catch (err) {
@@ -69,6 +73,18 @@ export function FileInput({
 			}
 		}, []
 	)
+
+	useEffect(()=>{
+		if(imagePreview) {
+			onChange(imagePreview)
+		}
+	},[imagePreview])
+
+	useEffect(()=>{
+		if(hasSubmited) {
+			setImagePreview("")
+		}
+	},[hasSubmited])
 
 	return (
 		<label className={[
@@ -82,13 +98,19 @@ export function FileInput({
 							type="spinner"
 							className="after:bg-gray-700"
 						/>
-						<p className="text-gray-300">{progress}</p>
+						<p className="text-gray-300 text-xs font-500 absolute top-50 left-50">{progress}%</p>
 					</>
 				) : (
-					<>
-						<Plus size={36} weight="fill"/>
-						<p>Upload avatar</p>
-					</>
+					imagePreview ? (
+						<img
+							src={imagePreview}
+						/>
+					) : (
+						<>
+							<Plus size={36} weight="fill"/>
+							<p>Upload avatar</p>
+						</>
+					)
 				)}
 			</div>
 
