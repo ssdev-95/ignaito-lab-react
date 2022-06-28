@@ -5,7 +5,10 @@ import {
 	useCallback,
 } from 'react'
 
-import { AxiosRequestConfig } from 'axios'
+import {
+	AxiosRequestConfig,
+	AxiosResponse
+} from 'axios'
 import { Plus } from 'phosphor-react'
 
 import { Loader } from './loader'
@@ -13,8 +16,16 @@ import { api } from '../lib/api'
 
 type FileInputProps = {
 	className?: string;
-	onChange?: (value:string) => void;
+	onChange: (value:string) => void;
 	hasSubmited?: boolean;
+}
+
+type ImgBBResponse = {
+	data: {
+		data: {
+			url: string;
+		}
+	}
 }
 
 export function FileInput({
@@ -26,7 +37,12 @@ export function FileInput({
 	
 	const handleChange = useCallback(
 		async (e:ChangeEvent<HTMLInputElement>) => {
-			if(!e.target.files.length) return;
+			if(
+				!e.target.files ||
+				!e.target.files?.length
+			) {
+				return
+			}
 			setLoading(true)
 
 			const uploadData = new FormData()
@@ -56,15 +72,14 @@ export function FileInput({
 
 
 			try {
-				const {
-					data: { data }
-				} = await api.post(
+				const { data } = await api.post(
 					'upload',
 					uploadData,
 					config
-				).catch(err => alert(err))
+				).catch((err:Error) => alert(err)) as ImgBBResponse
 
-				setImagePreview(data.url)
+				setImagePreview(data.data.url)
+				onChange(data.data.url)
 			} catch (err) {
 				alert(err)
 			} finally {
@@ -73,12 +88,6 @@ export function FileInput({
 			}
 		}, []
 	)
-
-	useEffect(()=>{
-		if(imagePreview) {
-			onChange(imagePreview)
-		}
-	},[imagePreview])
 
 	useEffect(()=>{
 		if(hasSubmited) {

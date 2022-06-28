@@ -1,7 +1,7 @@
-import { create } from 'axios'
+import axios from 'axios'
 
 const URI = "https://api.imgbb.com/1"
 
-export const api = create({
+export const api = axios.create({
 	baseURL: URI
 })

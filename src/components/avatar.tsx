@@ -3,7 +3,7 @@ import { User } from 'phosphor-react'
 import { Loader } from './loader'
 
 type AvatarProps = {
-	source: string | undefined;
+	source?: string | null;
 	className?: string;
 }
 

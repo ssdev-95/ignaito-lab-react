@@ -11,7 +11,7 @@ import {
 import { Loader } from './loader'
 
 type FormProps = {
-	onSuccess?: ()=>void;
+	onSuccess: ()=>void;
 }
 
 export function SubscribeForm({
@@ -25,7 +25,6 @@ export function SubscribeForm({
 	const [subscribe, { loading }] =  useCreateSubscriberMutation()
 
 	function handleChange(value:string) {
-		alert(value)
 		setAvatarUrl(value)
 	}
 
@@ -39,7 +38,7 @@ export function SubscribeForm({
 		setTimeout(() => {
 			setName("")
 			setEmail("")
-			setAvatar("")
+			setAvatarUrl("")
 			setHasSubmited(true)
 			onSuccess()
 		},500)
